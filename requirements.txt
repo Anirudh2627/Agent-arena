@@ -1,0 +1,7 @@
+# AgentArena runs on the Python standard library only (tested on 3.9-3.12).
+# No runtime dependencies are required.
+#
+# Optional, for development only:
+#   - node + jsdom   -> tests/smoke_demo.js (headless UI smoke test for data/demo.html)
+#   - an OpenAI-compatible inference endpoint (OpenAI / OpenRouter / vLLM /
+#     Ollama / llama.cpp server) -> arena/agents/llm_agent.py LLM tournaments

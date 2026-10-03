@@ -1,0 +1,3266 @@
+{
+ "meta": {
+  "gens": 14,
+  "pop": 20,
+  "train_seeds": 8,
+  "eval_seeds": 25,
+  "seed": 11,
+  "beta": 2.0,
+  "anchors": [
+   "hardball",
+   "bayes_sharp",
+   "honest_mid",
+   "eager",
+   "gullible"
+  ],
+  "theta_bounds": {
+   "anchor": [
+    0.25,
+    0.95
+   ],
+   "accept_mult": [
+    0.6,
+    1.8
+   ],
+   "bluff": [
+    0.0,
+    35.0
+   ],
+   "walk_p": [
+    0.03,
+    0.3
+   ],
+   "margin_scale": [
+    0.5,
+    1.6
+   ]
+  },
+  "top_candidates": 2,
+  "algorithm": "reward-weighted population evolution (RWR/RAFT-style) with champion ratchet on a fixed eval yardstick",
+  "runtime_s": 65.3
+ },
+ "gens": [
+  {
+   "gen": 0,
+   "theta": {
+    "anchor": 0.661,
+    "accept_mult": 0.822,
+    "bluff": 17.917,
+    "walk_p": 0.2,
+    "margin_scale": 1.372
+   },
+   "adopted": true,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.661,
+      "accept_mult": 0.822,
+      "bluff": 17.917,
+      "walk_p": 0.2,
+      "margin_scale": 1.372
+     },
+     "train_fit": 21.844425,
+     "eval_elo": 1602.0
+    },
+    {
+     "theta": {
+      "anchor": 0.701,
+      "accept_mult": 0.74,
+      "bluff": 14.726,
+      "walk_p": 0.087,
+      "margin_scale": 0.797
+     },
+     "train_fit": 21.625957500000002,
+     "eval_elo": 1583.5
+    }
+   ],
+   "fitness_best": 21.84,
+   "fitness_mean": 20.03,
+   "fitness_worst": 14.61,
+   "fitness_per_anchor": {
+    "hardball": 12.817,
+    "bayes_sharp": 16.537,
+    "honest_mid": 26.921,
+    "eager": 27.533,
+    "gullible": 25.414
+   },
+   "diversity": {
+    "anchor": 0.166,
+    "accept_mult": 0.3938,
+    "bluff": 10.0244,
+    "walk_p": 0.0765,
+    "margin_scale": 0.3182
+   },
+   "eval": {
+    "elo": {
+     "learner": 1602.0,
+     "hardball": 1624.9,
+     "bayes_sharp": 1524.2,
+     "honest_mid": 1414.2,
+     "eager": 1423.2,
+     "gullible": 1411.6
+    },
+    "per_anchor": {
+     "hardball": 0.46,
+     "bayes_sharp": 0.47,
+     "honest_mid": 0.8,
+     "eager": 0.78,
+     "gullible": 0.8
+    },
+    "metrics": {
+     "avg_payoff": 20.4,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.58,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 2.44,
+     "conc_after_bluff": 2.3,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 1,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": true,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.538,
+      "accept_mult": 1.755,
+      "bluff": 35.0,
+      "walk_p": 0.274,
+      "margin_scale": 1.279
+     },
+     "train_fit": 14.805452500000001,
+     "eval_elo": 1655.2
+    },
+    {
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "train_fit": 14.636860000000002,
+     "eval_elo": 1609.2
+    }
+   ],
+   "fitness_best": 14.81,
+   "fitness_mean": 13.9,
+   "fitness_worst": 13.05,
+   "fitness_per_anchor": {
+    "hardball": 8.106,
+    "bayes_sharp": 10.334,
+    "honest_mid": 18.135,
+    "eager": 18.716,
+    "gullible": 18.736
+   },
+   "diversity": {
+    "anchor": 0.1072,
+    "accept_mult": 0.3408,
+    "bluff": 9.346,
+    "walk_p": 0.0839,
+    "margin_scale": 0.3519
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 2,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.701,
+      "accept_mult": 0.74,
+      "bluff": 14.726,
+      "walk_p": 0.087,
+      "margin_scale": 0.797
+     },
+     "train_fit": 18.73218875,
+     "eval_elo": 1583.5
+    },
+    {
+     "theta": {
+      "anchor": 0.911,
+      "accept_mult": 0.833,
+      "bluff": 0.0,
+      "walk_p": 0.226,
+      "margin_scale": 0.5
+     },
+     "train_fit": 18.547728749999997,
+     "eval_elo": 1593.9
+    }
+   ],
+   "fitness_best": 18.73,
+   "fitness_mean": 17.49,
+   "fitness_worst": 14.36,
+   "fitness_per_anchor": {
+    "hardball": 9.047,
+    "bayes_sharp": 14.768,
+    "honest_mid": 23.054,
+    "eager": 25.021,
+    "gullible": 21.771
+   },
+   "diversity": {
+    "anchor": 0.1432,
+    "accept_mult": 0.3758,
+    "bluff": 11.7094,
+    "walk_p": 0.0883,
+    "margin_scale": 0.3085
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 3,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "train_fit": 14.60183625,
+     "eval_elo": 1609.2
+    },
+    {
+     "theta": {
+      "anchor": 0.549,
+      "accept_mult": 1.728,
+      "bluff": 35.0,
+      "walk_p": 0.3,
+      "margin_scale": 0.997
+     },
+     "train_fit": 14.56431,
+     "eval_elo": 1640.4
+    }
+   ],
+   "fitness_best": 14.6,
+   "fitness_mean": 14.06,
+   "fitness_worst": 10.99,
+   "fitness_per_anchor": {
+    "hardball": 7.179,
+    "bayes_sharp": 9.118,
+    "honest_mid": 18.151,
+    "eager": 19.669,
+    "gullible": 18.893
+   },
+   "diversity": {
+    "anchor": 0.1665,
+    "accept_mult": 0.338,
+    "bluff": 10.8422,
+    "walk_p": 0.0825,
+    "margin_scale": 0.2546
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 4,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.95,
+      "accept_mult": 0.721,
+      "bluff": 11.528,
+      "walk_p": 0.043,
+      "margin_scale": 0.907
+     },
+     "train_fit": 18.5892025,
+     "eval_elo": 1602.1
+    },
+    {
+     "theta": {
+      "anchor": 0.95,
+      "accept_mult": 0.799,
+      "bluff": 15.557,
+      "walk_p": 0.092,
+      "margin_scale": 0.796
+     },
+     "train_fit": 18.54533625,
+     "eval_elo": 1607.5
+    }
+   ],
+   "fitness_best": 18.59,
+   "fitness_mean": 17.69,
+   "fitness_worst": 16.62,
+   "fitness_per_anchor": {
+    "hardball": 9.697,
+    "bayes_sharp": 15.447,
+    "honest_mid": 24.087,
+    "eager": 21.56,
+    "gullible": 22.155
+   },
+   "diversity": {
+    "anchor": 0.1777,
+    "accept_mult": 0.2735,
+    "bluff": 12.2828,
+    "walk_p": 0.0962,
+    "margin_scale": 0.2125
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 5,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.706,
+      "accept_mult": 0.82,
+      "bluff": 28.001,
+      "walk_p": 0.261,
+      "margin_scale": 0.771
+     },
+     "train_fit": 19.97890875,
+     "eval_elo": 1590.0
+    },
+    {
+     "theta": {
+      "anchor": 0.934,
+      "accept_mult": 0.639,
+      "bluff": 13.905,
+      "walk_p": 0.083,
+      "margin_scale": 0.809
+     },
+     "train_fit": 19.9506275,
+     "eval_elo": 1600.7
+    }
+   ],
+   "fitness_best": 19.98,
+   "fitness_mean": 19.0,
+   "fitness_worst": 16.73,
+   "fitness_per_anchor": {
+    "hardball": 8.89,
+    "bayes_sharp": 15.089,
+    "honest_mid": 25.201,
+    "eager": 25.277,
+    "gullible": 25.438
+   },
+   "diversity": {
+    "anchor": 0.1586,
+    "accept_mult": 0.3235,
+    "bluff": 11.27,
+    "walk_p": 0.0942,
+    "margin_scale": 0.245
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 6,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.772,
+      "accept_mult": 0.732,
+      "bluff": 32.354,
+      "walk_p": 0.3,
+      "margin_scale": 0.871
+     },
+     "train_fit": 22.12569375,
+     "eval_elo": 1590.1
+    },
+    {
+     "theta": {
+      "anchor": 0.931,
+      "accept_mult": 0.763,
+      "bluff": 31.642,
+      "walk_p": 0.177,
+      "margin_scale": 1.117
+     },
+     "train_fit": 21.92453,
+     "eval_elo": 1615.7
+    }
+   ],
+   "fitness_best": 22.13,
+   "fitness_mean": 21.37,
+   "fitness_worst": 18.76,
+   "fitness_per_anchor": {
+    "hardball": 10.554,
+    "bayes_sharp": 17.855,
+    "honest_mid": 27.841,
+    "eager": 26.538,
+    "gullible": 27.841
+   },
+   "diversity": {
+    "anchor": 0.1286,
+    "accept_mult": 0.2463,
+    "bluff": 9.8849,
+    "walk_p": 0.0924,
+    "margin_scale": 0.2788
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 7,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.95,
+      "accept_mult": 0.6,
+      "bluff": 29.19,
+      "walk_p": 0.097,
+      "margin_scale": 0.785
+     },
+     "train_fit": 10.7663075,
+     "eval_elo": 1600.7
+    },
+    {
+     "theta": {
+      "anchor": 0.931,
+      "accept_mult": 0.763,
+      "bluff": 31.642,
+      "walk_p": 0.177,
+      "margin_scale": 1.117
+     },
+     "train_fit": 10.73455,
+     "eval_elo": 1615.7
+    }
+   ],
+   "fitness_best": 10.77,
+   "fitness_mean": 10.32,
+   "fitness_worst": 9.01,
+   "fitness_per_anchor": {
+    "hardball": 5.169,
+    "bayes_sharp": 8.188,
+    "honest_mid": 14.308,
+    "eager": 12.244,
+    "gullible": 13.922
+   },
+   "diversity": {
+    "anchor": 0.1526,
+    "accept_mult": 0.2195,
+    "bluff": 8.0602,
+    "walk_p": 0.0888,
+    "margin_scale": 0.2257
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 8,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.816,
+      "accept_mult": 0.627,
+      "bluff": 33.53,
+      "walk_p": 0.3,
+      "margin_scale": 0.777
+     },
+     "train_fit": 13.93913375,
+     "eval_elo": 1591.3
+    },
+    {
+     "theta": {
+      "anchor": 0.76,
+      "accept_mult": 0.874,
+      "bluff": 34.301,
+      "walk_p": 0.256,
+      "margin_scale": 0.796
+     },
+     "train_fit": 13.84021125,
+     "eval_elo": 1603.7
+    }
+   ],
+   "fitness_best": 13.94,
+   "fitness_mean": 13.0,
+   "fitness_worst": 11.34,
+   "fitness_per_anchor": {
+    "hardball": 5.729,
+    "bayes_sharp": 10.526,
+    "honest_mid": 16.7,
+    "eager": 18.973,
+    "gullible": 17.769
+   },
+   "diversity": {
+    "anchor": 0.1869,
+    "accept_mult": 0.3199,
+    "bluff": 10.6375,
+    "walk_p": 0.0965,
+    "margin_scale": 0.2532
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 9,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.433,
+      "accept_mult": 1.402,
+      "bluff": 6.51,
+      "walk_p": 0.157,
+      "margin_scale": 1.177
+     },
+     "train_fit": 1.047205,
+     "eval_elo": 1583.7
+    },
+    {
+     "theta": {
+      "anchor": 0.816,
+      "accept_mult": 0.627,
+      "bluff": 33.53,
+      "walk_p": 0.3,
+      "margin_scale": 0.777
+     },
+     "train_fit": 0.9531337499999999,
+     "eval_elo": 1591.3
+    }
+   ],
+   "fitness_best": 1.05,
+   "fitness_mean": 0.82,
+   "fitness_worst": 0.69,
+   "fitness_per_anchor": {
+    "hardball": 0.0,
+    "bayes_sharp": 0.984,
+    "honest_mid": 1.244,
+    "eager": 1.76,
+    "gullible": 1.248
+   },
+   "diversity": {
+    "anchor": 0.1421,
+    "accept_mult": 0.3179,
+    "bluff": 7.9243,
+    "walk_p": 0.1022,
+    "margin_scale": 0.205
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 10,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.714,
+      "accept_mult": 0.741,
+      "bluff": 34.437,
+      "walk_p": 0.3,
+      "margin_scale": 0.979
+     },
+     "train_fit": 12.09891625,
+     "eval_elo": 1596.8
+    },
+    {
+     "theta": {
+      "anchor": 0.724,
+      "accept_mult": 0.908,
+      "bluff": 23.441,
+      "walk_p": 0.3,
+      "margin_scale": 0.744
+     },
+     "train_fit": 12.0941275,
+     "eval_elo": 1603.8
+    }
+   ],
+   "fitness_best": 12.1,
+   "fitness_mean": 11.51,
+   "fitness_worst": 10.16,
+   "fitness_per_anchor": {
+    "hardball": 5.589,
+    "bayes_sharp": 9.468,
+    "honest_mid": 14.474,
+    "eager": 15.605,
+    "gullible": 15.358
+   },
+   "diversity": {
+    "anchor": 0.1607,
+    "accept_mult": 0.3164,
+    "bluff": 10.0675,
+    "walk_p": 0.1097,
+    "margin_scale": 0.214
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 11,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.812,
+      "accept_mult": 0.836,
+      "bluff": 35.0,
+      "walk_p": 0.237,
+      "margin_scale": 0.5
+     },
+     "train_fit": 12.66410125,
+     "eval_elo": 1594.1
+    },
+    {
+     "theta": {
+      "anchor": 0.943,
+      "accept_mult": 1.083,
+      "bluff": 30.362,
+      "walk_p": 0.064,
+      "margin_scale": 1.589
+     },
+     "train_fit": 12.528465,
+     "eval_elo": 1640.3
+    }
+   ],
+   "fitness_best": 12.66,
+   "fitness_mean": 12.09,
+   "fitness_worst": 10.0,
+   "fitness_per_anchor": {
+    "hardball": 5.191,
+    "bayes_sharp": 10.094,
+    "honest_mid": 15.995,
+    "eager": 15.773,
+    "gullible": 16.267
+   },
+   "diversity": {
+    "anchor": 0.1577,
+    "accept_mult": 0.4205,
+    "bluff": 9.809,
+    "walk_p": 0.1085,
+    "margin_scale": 0.2675
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 12,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.781,
+      "accept_mult": 0.875,
+      "bluff": 28.185,
+      "walk_p": 0.082,
+      "margin_scale": 1.032
+     },
+     "train_fit": 23.794661249999997,
+     "eval_elo": 1611.9
+    },
+    {
+     "theta": {
+      "anchor": 0.755,
+      "accept_mult": 1.103,
+      "bluff": 25.479,
+      "walk_p": 0.3,
+      "margin_scale": 0.59
+     },
+     "train_fit": 23.52598625,
+     "eval_elo": 1611.9
+    }
+   ],
+   "fitness_best": 23.79,
+   "fitness_mean": 22.46,
+   "fitness_worst": 20.79,
+   "fitness_per_anchor": {
+    "hardball": 12.568,
+    "bayes_sharp": 20.544,
+    "honest_mid": 29.318,
+    "eager": 27.819,
+    "gullible": 28.725
+   },
+   "diversity": {
+    "anchor": 0.1236,
+    "accept_mult": 0.4306,
+    "bluff": 9.3271,
+    "walk_p": 0.104,
+    "margin_scale": 0.3694
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  },
+  {
+   "gen": 13,
+   "theta": {
+    "anchor": 0.538,
+    "accept_mult": 1.755,
+    "bluff": 35.0,
+    "walk_p": 0.274,
+    "margin_scale": 1.279
+   },
+   "adopted": false,
+   "candidates": [
+    {
+     "theta": {
+      "anchor": 0.764,
+      "accept_mult": 0.6,
+      "bluff": 35.0,
+      "walk_p": 0.239,
+      "margin_scale": 0.77
+     },
+     "train_fit": 14.120616250000001,
+     "eval_elo": 1582.1
+    },
+    {
+     "theta": {
+      "anchor": 0.789,
+      "accept_mult": 0.932,
+      "bluff": 33.789,
+      "walk_p": 0.288,
+      "margin_scale": 0.989
+     },
+     "train_fit": 14.00675,
+     "eval_elo": 1614.7
+    }
+   ],
+   "fitness_best": 14.12,
+   "fitness_mean": 13.14,
+   "fitness_worst": 11.17,
+   "fitness_per_anchor": {
+    "hardball": 5.598,
+    "bayes_sharp": 9.85,
+    "honest_mid": 17.18,
+    "eager": 18.72,
+    "gullible": 19.255
+   },
+   "diversity": {
+    "anchor": 0.1033,
+    "accept_mult": 0.3718,
+    "bluff": 10.7229,
+    "walk_p": 0.0887,
+    "margin_scale": 0.324
+   },
+   "eval": {
+    "elo": {
+     "learner": 1655.2,
+     "hardball": 1616.7,
+     "bayes_sharp": 1493.5,
+     "honest_mid": 1409.4,
+     "eager": 1418.5,
+     "gullible": 1406.7
+    },
+    "per_anchor": {
+     "hardball": 0.53,
+     "bayes_sharp": 0.71,
+     "honest_mid": 0.82,
+     "eager": 0.8,
+     "gullible": 0.82
+    },
+    "metrics": {
+     "avg_payoff": 19.6,
+     "deal_rate": 0.584,
+     "zopa_deal_rate": 0.912,
+     "nozopa_walk_rate": 1.0,
+     "capture": 0.57,
+     "sucker_rate": 0.0,
+     "bluff_rate": 1.0,
+     "rounds_to_deal": 3.07,
+     "conc_after_bluff": 2.0,
+     "conc_after_honest": null,
+     "illegal_rate": 0.0
+    },
+    "n_games": 750
+   }
+  }
+ ],
+ "final": {
+  "theta": {
+   "anchor": 0.538,
+   "accept_mult": 1.755,
+   "bluff": 35.0,
+   "walk_p": 0.274,
+   "margin_scale": 1.279
+  },
+  "holdout": {
+   "elo": {
+    "learner": 1672.1,
+    "hardball": 1593.3,
+    "bayes_sharp": 1547.9,
+    "honest_mid": 1388.0,
+    "eager": 1411.6,
+    "gullible": 1387.1
+   },
+   "per_anchor": {
+    "hardball": 0.55,
+    "bayes_sharp": 0.694,
+    "honest_mid": 0.863,
+    "eager": 0.806,
+    "gullible": 0.863
+   },
+   "metrics": {
+    "avg_payoff": 15.18,
+    "deal_rate": 0.598,
+    "zopa_deal_rate": 0.771,
+    "nozopa_walk_rate": 1.0,
+    "capture": 0.547,
+    "sucker_rate": 0.0,
+    "bluff_rate": 1.0,
+    "rounds_to_deal": 3.85,
+    "conc_after_bluff": 2.33,
+    "conc_after_honest": null,
+    "illegal_rate": 0.0
+   },
+   "n_games": 1200
+  }
+ },
+ "ablations": [
+  {
+   "id": "coop",
+   "title": "Cooperative + gullible population (words believed)",
+   "anchors": [
+    "honest_mid",
+    "eager",
+    "reciprocal",
+    "gullible"
+   ],
+   "meta": {
+    "gens": 12,
+    "pop": 20,
+    "train_seeds": 8,
+    "eval_seeds": 25,
+    "seed": 11,
+    "beta": 2.0,
+    "anchors": [
+     "honest_mid",
+     "eager",
+     "reciprocal",
+     "gullible"
+    ],
+    "theta_bounds": {
+     "anchor": [
+      0.25,
+      0.95
+     ],
+     "accept_mult": [
+      0.6,
+      1.8
+     ],
+     "bluff": [
+      0.0,
+      35.0
+     ],
+     "walk_p": [
+      0.03,
+      0.3
+     ],
+     "margin_scale": [
+      0.5,
+      1.6
+     ]
+    },
+    "top_candidates": 2,
+    "algorithm": "reward-weighted population evolution (RWR/RAFT-style) with champion ratchet on a fixed eval yardstick",
+    "runtime_s": 28.1
+   },
+   "gens": [
+    {
+     "gen": 0,
+     "theta": {
+      "anchor": 0.661,
+      "accept_mult": 0.822,
+      "bluff": 17.917,
+      "walk_p": 0.2,
+      "margin_scale": 1.372
+     },
+     "adopted": true,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.661,
+        "accept_mult": 0.822,
+        "bluff": 17.917,
+        "walk_p": 0.2,
+        "margin_scale": 1.372
+       },
+       "train_fit": 24.9642828125,
+       "eval_elo": 1649.6
+      },
+      {
+       "theta": {
+        "anchor": 0.701,
+        "accept_mult": 0.74,
+        "bluff": 14.726,
+        "walk_p": 0.087,
+        "margin_scale": 0.797
+       },
+       "train_fit": 24.7271203125,
+       "eval_elo": 1638.8
+      }
+     ],
+     "fitness_best": 24.96,
+     "fitness_mean": 22.33,
+     "fitness_worst": 15.38,
+     "fitness_per_anchor": {
+      "honest_mid": 26.921,
+      "eager": 27.533,
+      "reciprocal": 19.989,
+      "gullible": 25.414
+     },
+     "diversity": {
+      "anchor": 0.166,
+      "accept_mult": 0.3938,
+      "bluff": 10.0244,
+      "walk_p": 0.0765,
+      "margin_scale": 0.3182
+     },
+     "eval": {
+      "elo": {
+       "learner": 1649.6,
+       "honest_mid": 1448.7,
+       "eager": 1451.7,
+       "reciprocal": 1501.3,
+       "gullible": 1448.7
+      },
+      "per_anchor": {
+       "honest_mid": 0.8,
+       "eager": 0.78,
+       "reciprocal": 0.6,
+       "gullible": 0.8
+      },
+      "metrics": {
+       "avg_payoff": 23.68,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.646,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.1,
+       "conc_after_bluff": 1.64,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 1,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": true,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.596,
+        "accept_mult": 0.978,
+        "bluff": 29.369,
+        "walk_p": 0.295,
+        "margin_scale": 0.998
+       },
+       "train_fit": 16.8806703125,
+       "eval_elo": 1670.4
+      },
+      {
+       "theta": {
+        "anchor": 0.701,
+        "accept_mult": 0.74,
+        "bluff": 14.726,
+        "walk_p": 0.087,
+        "margin_scale": 0.797
+       },
+       "train_fit": 16.7519203125,
+       "eval_elo": 1638.8
+      }
+     ],
+     "fitness_best": 16.88,
+     "fitness_mean": 15.79,
+     "fitness_worst": 11.54,
+     "fitness_per_anchor": {
+      "honest_mid": 18.497,
+      "eager": 18.909,
+      "reciprocal": 10.84,
+      "gullible": 19.277
+     },
+     "diversity": {
+      "anchor": 0.1599,
+      "accept_mult": 0.305,
+      "bluff": 9.3542,
+      "walk_p": 0.0693,
+      "margin_scale": 0.3129
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 2,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.575,
+        "accept_mult": 0.904,
+        "bluff": 29.736,
+        "walk_p": 0.3,
+        "margin_scale": 0.91
+       },
+       "train_fit": 22.0328828125,
+       "eval_elo": 1666.6
+      },
+      {
+       "theta": {
+        "anchor": 0.528,
+        "accept_mult": 0.688,
+        "bluff": 22.031,
+        "walk_p": 0.24,
+        "margin_scale": 0.797
+       },
+       "train_fit": 21.9257625,
+       "eval_elo": 1656.9
+      }
+     ],
+     "fitness_best": 22.03,
+     "fitness_mean": 20.49,
+     "fitness_worst": 15.39,
+     "fitness_per_anchor": {
+      "honest_mid": 23.028,
+      "eager": 23.94,
+      "reciprocal": 17.672,
+      "gullible": 23.491
+     },
+     "diversity": {
+      "anchor": 0.1666,
+      "accept_mult": 0.3094,
+      "bluff": 9.9073,
+      "walk_p": 0.0855,
+      "margin_scale": 0.2525
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 3,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.575,
+        "accept_mult": 0.904,
+        "bluff": 29.736,
+        "walk_p": 0.3,
+        "margin_scale": 0.91
+       },
+       "train_fit": 17.4888453125,
+       "eval_elo": 1666.6
+      },
+      {
+       "theta": {
+        "anchor": 0.536,
+        "accept_mult": 0.6,
+        "bluff": 22.326,
+        "walk_p": 0.223,
+        "margin_scale": 0.729
+       },
+       "train_fit": 17.425503125,
+       "eval_elo": 1656.9
+      }
+     ],
+     "fitness_best": 17.49,
+     "fitness_mean": 16.84,
+     "fitness_worst": 14.33,
+     "fitness_per_anchor": {
+      "honest_mid": 18.078,
+      "eager": 19.363,
+      "reciprocal": 13.566,
+      "gullible": 18.949
+     },
+     "diversity": {
+      "anchor": 0.1379,
+      "accept_mult": 0.1453,
+      "bluff": 8.6885,
+      "walk_p": 0.0823,
+      "margin_scale": 0.2022
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 4,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.536,
+        "accept_mult": 0.6,
+        "bluff": 22.326,
+        "walk_p": 0.223,
+        "margin_scale": 0.729
+       },
+       "train_fit": 22.064725,
+       "eval_elo": 1656.9
+      },
+      {
+       "theta": {
+        "anchor": 0.584,
+        "accept_mult": 0.684,
+        "bluff": 28.819,
+        "walk_p": 0.14,
+        "margin_scale": 0.5
+       },
+       "train_fit": 21.9394921875,
+       "eval_elo": 1653.2
+      }
+     ],
+     "fitness_best": 22.06,
+     "fitness_mean": 20.97,
+     "fitness_worst": 18.96,
+     "fitness_per_anchor": {
+      "honest_mid": 23.115,
+      "eager": 24.117,
+      "reciprocal": 17.834,
+      "gullible": 23.193
+     },
+     "diversity": {
+      "anchor": 0.1744,
+      "accept_mult": 0.2443,
+      "bluff": 9.2349,
+      "walk_p": 0.0706,
+      "margin_scale": 0.274
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 5,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.584,
+        "accept_mult": 0.684,
+        "bluff": 28.819,
+        "walk_p": 0.14,
+        "margin_scale": 0.5
+       },
+       "train_fit": 23.5653546875,
+       "eval_elo": 1653.2
+      },
+      {
+       "theta": {
+        "anchor": 0.69,
+        "accept_mult": 0.6,
+        "bluff": 20.775,
+        "walk_p": 0.155,
+        "margin_scale": 0.702
+       },
+       "train_fit": 23.268678125,
+       "eval_elo": 1638.8
+      }
+     ],
+     "fitness_best": 23.57,
+     "fitness_mean": 22.03,
+     "fitness_worst": 15.27,
+     "fitness_per_anchor": {
+      "honest_mid": 24.228,
+      "eager": 24.161,
+      "reciprocal": 21.087,
+      "gullible": 24.785
+     },
+     "diversity": {
+      "anchor": 0.1756,
+      "accept_mult": 0.3018,
+      "bluff": 7.8378,
+      "walk_p": 0.0599,
+      "margin_scale": 0.3088
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 6,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.689,
+        "accept_mult": 0.6,
+        "bluff": 33.337,
+        "walk_p": 0.132,
+        "margin_scale": 0.72
+       },
+       "train_fit": 25.295196875,
+       "eval_elo": 1638.8
+      },
+      {
+       "theta": {
+        "anchor": 0.931,
+        "accept_mult": 0.763,
+        "bluff": 31.642,
+        "walk_p": 0.177,
+        "margin_scale": 1.117
+       },
+       "train_fit": 24.99808125,
+       "eval_elo": 1653.1
+      }
+     ],
+     "fitness_best": 25.3,
+     "fitness_mean": 24.3,
+     "fitness_worst": 19.88,
+     "fitness_per_anchor": {
+      "honest_mid": 26.773,
+      "eager": 25.569,
+      "reciprocal": 21.953,
+      "gullible": 26.886
+     },
+     "diversity": {
+      "anchor": 0.1193,
+      "accept_mult": 0.2482,
+      "bluff": 6.0949,
+      "walk_p": 0.053,
+      "margin_scale": 0.2052
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 7,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.569,
+        "accept_mult": 0.6,
+        "bluff": 34.301,
+        "walk_p": 0.279,
+        "margin_scale": 0.719
+       },
+       "train_fit": 12.5375359375,
+       "eval_elo": 1649.6
+      },
+      {
+       "theta": {
+        "anchor": 0.94,
+        "accept_mult": 0.633,
+        "bluff": 16.689,
+        "walk_p": 0.124,
+        "margin_scale": 0.538
+       },
+       "train_fit": 12.3613796875,
+       "eval_elo": 1642.3
+      }
+     ],
+     "fitness_best": 12.54,
+     "fitness_mean": 11.88,
+     "fitness_worst": 10.16,
+     "fitness_per_anchor": {
+      "honest_mid": 12.969,
+      "eager": 13.919,
+      "reciprocal": 9.021,
+      "gullible": 14.241
+     },
+     "diversity": {
+      "anchor": 0.1383,
+      "accept_mult": 0.2017,
+      "bluff": 9.3035,
+      "walk_p": 0.0662,
+      "margin_scale": 0.3481
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 8,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.741,
+        "accept_mult": 0.6,
+        "bluff": 35.0,
+        "walk_p": 0.272,
+        "margin_scale": 0.657
+       },
+       "train_fit": 16.41116875,
+       "eval_elo": 1637.1
+      },
+      {
+       "theta": {
+        "anchor": 0.733,
+        "accept_mult": 0.6,
+        "bluff": 34.512,
+        "walk_p": 0.22,
+        "margin_scale": 0.626
+       },
+       "train_fit": 16.3985125,
+       "eval_elo": 1638.8
+      }
+     ],
+     "fitness_best": 16.41,
+     "fitness_mean": 15.29,
+     "fitness_worst": 12.86,
+     "fitness_per_anchor": {
+      "honest_mid": 16.419,
+      "eager": 18.285,
+      "reciprocal": 12.06,
+      "gullible": 18.881
+     },
+     "diversity": {
+      "anchor": 0.1657,
+      "accept_mult": 0.3055,
+      "bluff": 10.7854,
+      "walk_p": 0.0797,
+      "margin_scale": 0.348
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 9,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.741,
+        "accept_mult": 0.6,
+        "bluff": 35.0,
+        "walk_p": 0.272,
+        "margin_scale": 0.657
+       },
+       "train_fit": 1.638725,
+       "eval_elo": 1637.1
+      },
+      {
+       "theta": {
+        "anchor": 0.733,
+        "accept_mult": 0.6,
+        "bluff": 34.512,
+        "walk_p": 0.22,
+        "margin_scale": 0.626
+       },
+       "train_fit": 1.56363125,
+       "eval_elo": 1638.8
+      }
+     ],
+     "fitness_best": 1.64,
+     "fitness_mean": 1.32,
+     "fitness_worst": 1.11,
+     "fitness_per_anchor": {
+      "honest_mid": 1.7,
+      "eager": 1.199,
+      "reciprocal": 1.637,
+      "gullible": 2.019
+     },
+     "diversity": {
+      "anchor": 0.1648,
+      "accept_mult": 0.2868,
+      "bluff": 7.7507,
+      "walk_p": 0.0779,
+      "margin_scale": 0.2825
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 10,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.733,
+        "accept_mult": 0.6,
+        "bluff": 34.512,
+        "walk_p": 0.22,
+        "margin_scale": 0.626
+       },
+       "train_fit": 14.27783125,
+       "eval_elo": 1638.8
+      },
+      {
+       "theta": {
+        "anchor": 0.644,
+        "accept_mult": 0.655,
+        "bluff": 35.0,
+        "walk_p": 0.279,
+        "margin_scale": 0.725
+       },
+       "train_fit": 14.0698796875,
+       "eval_elo": 1640.6
+      }
+     ],
+     "fitness_best": 14.28,
+     "fitness_mean": 13.55,
+     "fitness_worst": 12.64,
+     "fitness_per_anchor": {
+      "honest_mid": 14.904,
+      "eager": 16.098,
+      "reciprocal": 10.322,
+      "gullible": 15.787
+     },
+     "diversity": {
+      "anchor": 0.1672,
+      "accept_mult": 0.1359,
+      "bluff": 6.4682,
+      "walk_p": 0.0664,
+      "margin_scale": 0.2824
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    },
+    {
+     "gen": 11,
+     "theta": {
+      "anchor": 0.596,
+      "accept_mult": 0.978,
+      "bluff": 29.369,
+      "walk_p": 0.295,
+      "margin_scale": 0.998
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.647,
+        "accept_mult": 0.6,
+        "bluff": 33.081,
+        "walk_p": 0.3,
+        "margin_scale": 0.761
+       },
+       "train_fit": 15.453793749999999,
+       "eval_elo": 1640.6
+      },
+      {
+       "theta": {
+        "anchor": 0.813,
+        "accept_mult": 0.6,
+        "bluff": 35.0,
+        "walk_p": 0.293,
+        "margin_scale": 0.578
+       },
+       "train_fit": 15.4223890625,
+       "eval_elo": 1631.9
+      }
+     ],
+     "fitness_best": 15.45,
+     "fitness_mean": 14.91,
+     "fitness_worst": 13.73,
+     "fitness_per_anchor": {
+      "honest_mid": 16.084,
+      "eager": 15.171,
+      "reciprocal": 13.183,
+      "gullible": 17.377
+     },
+     "diversity": {
+      "anchor": 0.1048,
+      "accept_mult": 0.2755,
+      "bluff": 5.8781,
+      "walk_p": 0.0611,
+      "margin_scale": 0.2829
+     },
+     "eval": {
+      "elo": {
+       "learner": 1670.4,
+       "honest_mid": 1444.5,
+       "eager": 1447.4,
+       "reciprocal": 1493.2,
+       "gullible": 1444.5
+      },
+      "per_anchor": {
+       "honest_mid": 0.82,
+       "eager": 0.8,
+       "reciprocal": 0.65,
+       "gullible": 0.82
+      },
+      "metrics": {
+       "avg_payoff": 23.63,
+       "deal_rate": 0.63,
+       "zopa_deal_rate": 0.984,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.651,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 2.27,
+       "conc_after_bluff": 1.77,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 500
+     }
+    }
+   ],
+   "final": {
+    "theta": {
+     "anchor": 0.596,
+     "accept_mult": 0.978,
+     "bluff": 29.369,
+     "walk_p": 0.295,
+     "margin_scale": 0.998
+    },
+    "holdout": {
+     "elo": {
+      "learner": 1678.7,
+      "honest_mid": 1442.5,
+      "eager": 1446.3,
+      "reciprocal": 1490.8,
+      "gullible": 1441.6
+     },
+     "per_anchor": {
+      "honest_mid": 0.844,
+      "eager": 0.769,
+      "reciprocal": 0.669,
+      "gullible": 0.85
+     },
+     "metrics": {
+      "avg_payoff": 18.48,
+      "deal_rate": 0.688,
+      "zopa_deal_rate": 0.887,
+      "nozopa_walk_rate": 1.0,
+      "capture": 0.605,
+      "sucker_rate": 0.0,
+      "bluff_rate": 1.0,
+      "rounds_to_deal": 3.21,
+      "conc_after_bluff": 2.46,
+      "conc_after_honest": null,
+      "illegal_rate": 0.0
+     },
+     "n_games": 800
+    }
+   }
+  },
+  {
+   "id": "resistant",
+   "title": "Bluff-resistant population (word-deaf adversaries)",
+   "anchors": [
+    "bayes_sharp",
+    "hardball"
+   ],
+   "meta": {
+    "gens": 12,
+    "pop": 20,
+    "train_seeds": 8,
+    "eval_seeds": 25,
+    "seed": 11,
+    "beta": 2.0,
+    "anchors": [
+     "bayes_sharp",
+     "hardball"
+    ],
+    "theta_bounds": {
+     "anchor": [
+      0.25,
+      0.95
+     ],
+     "accept_mult": [
+      0.6,
+      1.8
+     ],
+     "bluff": [
+      0.0,
+      35.0
+     ],
+     "walk_p": [
+      0.03,
+      0.3
+     ],
+     "margin_scale": [
+      0.5,
+      1.6
+     ]
+    },
+    "top_candidates": 2,
+    "algorithm": "reward-weighted population evolution (RWR/RAFT-style) with champion ratchet on a fixed eval yardstick",
+    "runtime_s": 31.5
+   },
+   "gens": [
+    {
+     "gen": 0,
+     "theta": {
+      "anchor": 0.53,
+      "accept_mult": 1.616,
+      "bluff": 13.528,
+      "walk_p": 0.289,
+      "margin_scale": 1.432
+     },
+     "adopted": true,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.53,
+        "accept_mult": 1.616,
+        "bluff": 13.528,
+        "walk_p": 0.289,
+        "margin_scale": 1.432
+       },
+       "train_fit": 16.548809375,
+       "eval_elo": 1555.3
+      },
+      {
+       "theta": {
+        "anchor": 0.445,
+        "accept_mult": 1.797,
+        "bluff": 34.849,
+        "walk_p": 0.257,
+        "margin_scale": 1.279
+       },
+       "train_fit": 16.414503125,
+       "eval_elo": 1528.5
+      }
+     ],
+     "fitness_best": 16.55,
+     "fitness_mean": 14.83,
+     "fitness_worst": 13.04,
+     "fitness_per_anchor": {
+      "bayes_sharp": 17.706,
+      "hardball": 15.392
+     },
+     "diversity": {
+      "anchor": 0.166,
+      "accept_mult": 0.3938,
+      "bluff": 10.0244,
+      "walk_p": 0.0765,
+      "margin_scale": 0.3182
+     },
+     "eval": {
+      "elo": {
+       "learner": 1555.3,
+       "bayes_sharp": 1423.0,
+       "hardball": 1521.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.67,
+       "hardball": 0.56
+      },
+      "metrics": {
+       "avg_payoff": 14.32,
+       "deal_rate": 0.5,
+       "zopa_deal_rate": 0.781,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.429,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 3.94,
+       "conc_after_bluff": 2.66,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 1,
+     "theta": {
+      "anchor": 0.53,
+      "accept_mult": 1.616,
+      "bluff": 13.528,
+      "walk_p": 0.289,
+      "margin_scale": 1.432
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.361,
+        "accept_mult": 1.734,
+        "bluff": 23.882,
+        "walk_p": 0.09,
+        "margin_scale": 1.6
+       },
+       "train_fit": 10.447578125,
+       "eval_elo": 1504.7
+      },
+      {
+       "theta": {
+        "anchor": 0.25,
+        "accept_mult": 0.859,
+        "bluff": 32.596,
+        "walk_p": 0.176,
+        "margin_scale": 1.6
+       },
+       "train_fit": 9.842465625,
+       "eval_elo": 1432.0
+      }
+     ],
+     "fitness_best": 10.45,
+     "fitness_mean": 8.74,
+     "fitness_worst": 7.32,
+     "fitness_per_anchor": {
+      "bayes_sharp": 9.719,
+      "hardball": 11.176
+     },
+     "diversity": {
+      "anchor": 0.1387,
+      "accept_mult": 0.3845,
+      "bluff": 11.4837,
+      "walk_p": 0.088,
+      "margin_scale": 0.3698
+     },
+     "eval": {
+      "elo": {
+       "learner": 1555.3,
+       "bayes_sharp": 1423.0,
+       "hardball": 1521.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.67,
+       "hardball": 0.56
+      },
+      "metrics": {
+       "avg_payoff": 14.32,
+       "deal_rate": 0.5,
+       "zopa_deal_rate": 0.781,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.429,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 3.94,
+       "conc_after_bluff": 2.66,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 2,
+     "theta": {
+      "anchor": 0.53,
+      "accept_mult": 1.616,
+      "bluff": 13.528,
+      "walk_p": 0.289,
+      "margin_scale": 1.432
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.487,
+        "accept_mult": 1.767,
+        "bluff": 32.153,
+        "walk_p": 0.3,
+        "margin_scale": 1.25
+       },
+       "train_fit": 13.21815,
+       "eval_elo": 1550.5
+      },
+      {
+       "theta": {
+        "anchor": 0.478,
+        "accept_mult": 1.24,
+        "bluff": 0.0,
+        "walk_p": 0.274,
+        "margin_scale": 0.5
+       },
+       "train_fit": 13.0905625,
+       "eval_elo": 1488.3
+      }
+     ],
+     "fitness_best": 13.22,
+     "fitness_mean": 12.15,
+     "fitness_worst": 10.71,
+     "fitness_per_anchor": {
+      "bayes_sharp": 12.346,
+      "hardball": 14.09
+     },
+     "diversity": {
+      "anchor": 0.1061,
+      "accept_mult": 0.3846,
+      "bluff": 11.8445,
+      "walk_p": 0.0882,
+      "margin_scale": 0.3196
+     },
+     "eval": {
+      "elo": {
+       "learner": 1555.3,
+       "bayes_sharp": 1423.0,
+       "hardball": 1521.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.67,
+       "hardball": 0.56
+      },
+      "metrics": {
+       "avg_payoff": 14.32,
+       "deal_rate": 0.5,
+       "zopa_deal_rate": 0.781,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.429,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 3.94,
+       "conc_after_bluff": 2.66,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 3,
+     "theta": {
+      "anchor": 0.48,
+      "accept_mult": 1.786,
+      "bluff": 16.488,
+      "walk_p": 0.089,
+      "margin_scale": 1.6
+     },
+     "adopted": true,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.43,
+        "accept_mult": 1.694,
+        "bluff": 35.0,
+        "walk_p": 0.239,
+        "margin_scale": 0.975
+       },
+       "train_fit": 10.633921875,
+       "eval_elo": 1507.1
+      },
+      {
+       "theta": {
+        "anchor": 0.48,
+        "accept_mult": 1.786,
+        "bluff": 16.488,
+        "walk_p": 0.089,
+        "margin_scale": 1.6
+       },
+       "train_fit": 10.59601875,
+       "eval_elo": 1558.1
+      }
+     ],
+     "fitness_best": 10.63,
+     "fitness_mean": 9.37,
+     "fitness_worst": 8.35,
+     "fitness_per_anchor": {
+      "bayes_sharp": 11.334,
+      "hardball": 9.934
+     },
+     "diversity": {
+      "anchor": 0.1379,
+      "accept_mult": 0.437,
+      "bluff": 12.4518,
+      "walk_p": 0.0968,
+      "margin_scale": 0.3932
+     },
+     "eval": {
+      "elo": {
+       "learner": 1558.1,
+       "bayes_sharp": 1415.2,
+       "hardball": 1526.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.7,
+       "hardball": 0.54
+      },
+      "metrics": {
+       "avg_payoff": 14.6,
+       "deal_rate": 0.5,
+       "zopa_deal_rate": 0.781,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.434,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 3.8,
+       "conc_after_bluff": 2.79,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 4,
+     "theta": {
+      "anchor": 0.48,
+      "accept_mult": 1.786,
+      "bluff": 16.488,
+      "walk_p": 0.089,
+      "margin_scale": 1.6
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.439,
+        "accept_mult": 1.8,
+        "bluff": 22.877,
+        "walk_p": 0.09,
+        "margin_scale": 1.6
+       },
+       "train_fit": 14.15155625,
+       "eval_elo": 1535.8
+      },
+      {
+       "theta": {
+        "anchor": 0.437,
+        "accept_mult": 1.8,
+        "bluff": 14.98,
+        "walk_p": 0.102,
+        "margin_scale": 1.6
+       },
+       "train_fit": 14.12343125,
+       "eval_elo": 1535.8
+      }
+     ],
+     "fitness_best": 14.15,
+     "fitness_mean": 12.45,
+     "fitness_worst": 10.61,
+     "fitness_per_anchor": {
+      "bayes_sharp": 13.215,
+      "hardball": 15.088
+     },
+     "diversity": {
+      "anchor": 0.1179,
+      "accept_mult": 0.362,
+      "bluff": 10.5308,
+      "walk_p": 0.0883,
+      "margin_scale": 0.298
+     },
+     "eval": {
+      "elo": {
+       "learner": 1558.1,
+       "bayes_sharp": 1415.2,
+       "hardball": 1526.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.7,
+       "hardball": 0.54
+      },
+      "metrics": {
+       "avg_payoff": 14.6,
+       "deal_rate": 0.5,
+       "zopa_deal_rate": 0.781,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.434,
+       "sucker_rate": 0.0,
+       "bluff_rate": 1.0,
+       "rounds_to_deal": 3.8,
+       "conc_after_bluff": 2.79,
+       "conc_after_honest": null,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 5,
+     "theta": {
+      "anchor": 0.494,
+      "accept_mult": 1.8,
+      "bluff": 3.505,
+      "walk_p": 0.039,
+      "margin_scale": 1.6
+     },
+     "adopted": true,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.464,
+        "accept_mult": 1.626,
+        "bluff": 14.836,
+        "walk_p": 0.08,
+        "margin_scale": 1.6
+       },
+       "train_fit": 14.456415625,
+       "eval_elo": 1545.5
+      },
+      {
+       "theta": {
+        "anchor": 0.494,
+        "accept_mult": 1.8,
+        "bluff": 3.505,
+        "walk_p": 0.039,
+        "margin_scale": 1.6
+       },
+       "train_fit": 14.089584375,
+       "eval_elo": 1576.3
+      }
+     ],
+     "fitness_best": 14.46,
+     "fitness_mean": 13.37,
+     "fitness_worst": 11.87,
+     "fitness_per_anchor": {
+      "bayes_sharp": 12.55,
+      "hardball": 16.363
+     },
+     "diversity": {
+      "anchor": 0.0667,
+      "accept_mult": 0.2711,
+      "bluff": 8.4124,
+      "walk_p": 0.0864,
+      "margin_scale": 0.2915
+     },
+     "eval": {
+      "elo": {
+       "learner": 1576.3,
+       "bayes_sharp": 1404.0,
+       "hardball": 1519.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.74,
+       "hardball": 0.57
+      },
+      "metrics": {
+       "avg_payoff": 14.71,
+       "deal_rate": 0.52,
+       "zopa_deal_rate": 0.812,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.43,
+       "sucker_rate": 0.0,
+       "bluff_rate": 0.0,
+       "rounds_to_deal": 3.9,
+       "conc_after_bluff": null,
+       "conc_after_honest": 2.88,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 6,
+     "theta": {
+      "anchor": 0.494,
+      "accept_mult": 1.8,
+      "bluff": 3.505,
+      "walk_p": 0.039,
+      "margin_scale": 1.6
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.566,
+        "accept_mult": 1.8,
+        "bluff": 17.808,
+        "walk_p": 0.144,
+        "margin_scale": 1.506
+       },
+       "train_fit": 17.450234375,
+       "eval_elo": 1560.9
+      },
+      {
+       "theta": {
+        "anchor": 0.577,
+        "accept_mult": 1.379,
+        "bluff": 10.4,
+        "walk_p": 0.03,
+        "margin_scale": 1.486
+       },
+       "train_fit": 17.311078125,
+       "eval_elo": 1528.3
+      }
+     ],
+     "fitness_best": 17.45,
+     "fitness_mean": 15.67,
+     "fitness_worst": 13.7,
+     "fitness_per_anchor": {
+      "bayes_sharp": 16.768,
+      "hardball": 18.133
+     },
+     "diversity": {
+      "anchor": 0.1141,
+      "accept_mult": 0.259,
+      "bluff": 10.9419,
+      "walk_p": 0.0798,
+      "margin_scale": 0.277
+     },
+     "eval": {
+      "elo": {
+       "learner": 1576.3,
+       "bayes_sharp": 1404.0,
+       "hardball": 1519.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.74,
+       "hardball": 0.57
+      },
+      "metrics": {
+       "avg_payoff": 14.71,
+       "deal_rate": 0.52,
+       "zopa_deal_rate": 0.812,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.43,
+       "sucker_rate": 0.0,
+       "bluff_rate": 0.0,
+       "rounds_to_deal": 3.9,
+       "conc_after_bluff": null,
+       "conc_after_honest": 2.88,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 7,
+     "theta": {
+      "anchor": 0.494,
+      "accept_mult": 1.8,
+      "bluff": 3.505,
+      "walk_p": 0.039,
+      "margin_scale": 1.6
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.429,
+        "accept_mult": 1.785,
+        "bluff": 12.021,
+        "walk_p": 0.084,
+        "margin_scale": 1.6
+       },
+       "train_fit": 7.878925,
+       "eval_elo": 1530.9
+      },
+      {
+       "theta": {
+        "anchor": 0.488,
+        "accept_mult": 1.8,
+        "bluff": 9.612,
+        "walk_p": 0.139,
+        "margin_scale": 1.526
+       },
+       "train_fit": 7.4930375,
+       "eval_elo": 1565.8
+      }
+     ],
+     "fitness_best": 7.88,
+     "fitness_mean": 7.04,
+     "fitness_worst": 5.77,
+     "fitness_per_anchor": {
+      "bayes_sharp": 6.941,
+      "hardball": 8.817
+     },
+     "diversity": {
+      "anchor": 0.111,
+      "accept_mult": 0.2617,
+      "bluff": 10.9516,
+      "walk_p": 0.0877,
+      "margin_scale": 0.0817
+     },
+     "eval": {
+      "elo": {
+       "learner": 1576.3,
+       "bayes_sharp": 1404.0,
+       "hardball": 1519.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.74,
+       "hardball": 0.57
+      },
+      "metrics": {
+       "avg_payoff": 14.71,
+       "deal_rate": 0.52,
+       "zopa_deal_rate": 0.812,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.43,
+       "sucker_rate": 0.0,
+       "bluff_rate": 0.0,
+       "rounds_to_deal": 3.9,
+       "conc_after_bluff": null,
+       "conc_after_honest": 2.88,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 8,
+     "theta": {
+      "anchor": 0.494,
+      "accept_mult": 1.8,
+      "bluff": 3.505,
+      "walk_p": 0.039,
+      "margin_scale": 1.6
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.488,
+        "accept_mult": 1.8,
+        "bluff": 9.612,
+        "walk_p": 0.139,
+        "margin_scale": 1.526
+       },
+       "train_fit": 10.316321875,
+       "eval_elo": 1565.8
+      },
+      {
+       "theta": {
+        "anchor": 0.504,
+        "accept_mult": 1.472,
+        "bluff": 0.0,
+        "walk_p": 0.255,
+        "margin_scale": 1.588
+       },
+       "train_fit": 9.918581249999999,
+       "eval_elo": 1560.2
+      }
+     ],
+     "fitness_best": 10.32,
+     "fitness_mean": 8.96,
+     "fitness_worst": 6.77,
+     "fitness_per_anchor": {
+      "bayes_sharp": 10.625,
+      "hardball": 10.007
+     },
+     "diversity": {
+      "anchor": 0.0966,
+      "accept_mult": 0.2157,
+      "bluff": 9.5893,
+      "walk_p": 0.0924,
+      "margin_scale": 0.1917
+     },
+     "eval": {
+      "elo": {
+       "learner": 1576.3,
+       "bayes_sharp": 1404.0,
+       "hardball": 1519.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.74,
+       "hardball": 0.57
+      },
+      "metrics": {
+       "avg_payoff": 14.71,
+       "deal_rate": 0.52,
+       "zopa_deal_rate": 0.812,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.43,
+       "sucker_rate": 0.0,
+       "bluff_rate": 0.0,
+       "rounds_to_deal": 3.9,
+       "conc_after_bluff": null,
+       "conc_after_honest": 2.88,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 9,
+     "theta": {
+      "anchor": 0.494,
+      "accept_mult": 1.8,
+      "bluff": 3.505,
+      "walk_p": 0.039,
+      "margin_scale": 1.6
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.424,
+        "accept_mult": 1.8,
+        "bluff": 4.73,
+        "walk_p": 0.03,
+        "margin_scale": 1.331
+       },
+       "train_fit": 0.717609375,
+       "eval_elo": 1533.3
+      },
+      {
+       "theta": {
+        "anchor": 0.523,
+        "accept_mult": 1.704,
+        "bluff": 17.791,
+        "walk_p": 0.03,
+        "margin_scale": 1.05
+       },
+       "train_fit": 0.512578125,
+       "eval_elo": 1543.3
+      }
+     ],
+     "fitness_best": 0.72,
+     "fitness_mean": 0.23,
+     "fitness_worst": 0.0,
+     "fitness_per_anchor": {
+      "bayes_sharp": 1.025,
+      "hardball": 0.41
+     },
+     "diversity": {
+      "anchor": 0.1202,
+      "accept_mult": 0.1949,
+      "bluff": 8.4419,
+      "walk_p": 0.0781,
+      "margin_scale": 0.2011
+     },
+     "eval": {
+      "elo": {
+       "learner": 1576.3,
+       "bayes_sharp": 1404.0,
+       "hardball": 1519.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.74,
+       "hardball": 0.57
+      },
+      "metrics": {
+       "avg_payoff": 14.71,
+       "deal_rate": 0.52,
+       "zopa_deal_rate": 0.812,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.43,
+       "sucker_rate": 0.0,
+       "bluff_rate": 0.0,
+       "rounds_to_deal": 3.9,
+       "conc_after_bluff": null,
+       "conc_after_honest": 2.88,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 10,
+     "theta": {
+      "anchor": 0.494,
+      "accept_mult": 1.8,
+      "bluff": 3.505,
+      "walk_p": 0.039,
+      "margin_scale": 1.6
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.424,
+        "accept_mult": 1.8,
+        "bluff": 4.73,
+        "walk_p": 0.03,
+        "margin_scale": 1.331
+       },
+       "train_fit": 8.353275,
+       "eval_elo": 1533.3
+      },
+      {
+       "theta": {
+        "anchor": 0.523,
+        "accept_mult": 1.704,
+        "bluff": 17.791,
+        "walk_p": 0.03,
+        "margin_scale": 1.05
+       },
+       "train_fit": 7.5866625,
+       "eval_elo": 1543.3
+      }
+     ],
+     "fitness_best": 8.35,
+     "fitness_mean": 6.78,
+     "fitness_worst": 5.43,
+     "fitness_per_anchor": {
+      "bayes_sharp": 8.274,
+      "hardball": 8.432
+     },
+     "diversity": {
+      "anchor": 0.1018,
+      "accept_mult": 0.3082,
+      "bluff": 8.8577,
+      "walk_p": 0.0668,
+      "margin_scale": 0.2527
+     },
+     "eval": {
+      "elo": {
+       "learner": 1576.3,
+       "bayes_sharp": 1404.0,
+       "hardball": 1519.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.74,
+       "hardball": 0.57
+      },
+      "metrics": {
+       "avg_payoff": 14.71,
+       "deal_rate": 0.52,
+       "zopa_deal_rate": 0.812,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.43,
+       "sucker_rate": 0.0,
+       "bluff_rate": 0.0,
+       "rounds_to_deal": 3.9,
+       "conc_after_bluff": null,
+       "conc_after_honest": 2.88,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    },
+    {
+     "gen": 11,
+     "theta": {
+      "anchor": 0.494,
+      "accept_mult": 1.8,
+      "bluff": 3.505,
+      "walk_p": 0.039,
+      "margin_scale": 1.6
+     },
+     "adopted": false,
+     "candidates": [
+      {
+       "theta": {
+        "anchor": 0.568,
+        "accept_mult": 1.656,
+        "bluff": 0.0,
+        "walk_p": 0.03,
+        "margin_scale": 1.225
+       },
+       "train_fit": 10.300196875,
+       "eval_elo": 1526.2
+      },
+      {
+       "theta": {
+        "anchor": 0.565,
+        "accept_mult": 1.607,
+        "bluff": 0.0,
+        "walk_p": 0.042,
+        "margin_scale": 1.195
+       },
+       "train_fit": 10.236409375,
+       "eval_elo": 1521.4
+      }
+     ],
+     "fitness_best": 10.3,
+     "fitness_mean": 9.2,
+     "fitness_worst": 8.04,
+     "fitness_per_anchor": {
+      "bayes_sharp": 10.148,
+      "hardball": 10.452
+     },
+     "diversity": {
+      "anchor": 0.1191,
+      "accept_mult": 0.3069,
+      "bluff": 10.6305,
+      "walk_p": 0.0705,
+      "margin_scale": 0.173
+     },
+     "eval": {
+      "elo": {
+       "learner": 1576.3,
+       "bayes_sharp": 1404.0,
+       "hardball": 1519.7
+      },
+      "per_anchor": {
+       "bayes_sharp": 0.74,
+       "hardball": 0.57
+      },
+      "metrics": {
+       "avg_payoff": 14.71,
+       "deal_rate": 0.52,
+       "zopa_deal_rate": 0.812,
+       "nozopa_walk_rate": 1.0,
+       "capture": 0.43,
+       "sucker_rate": 0.0,
+       "bluff_rate": 0.0,
+       "rounds_to_deal": 3.9,
+       "conc_after_bluff": null,
+       "conc_after_honest": 2.88,
+       "illegal_rate": 0.0
+      },
+      "n_games": 150
+     }
+    }
+   ],
+   "final": {
+    "theta": {
+     "anchor": 0.494,
+     "accept_mult": 1.8,
+     "bluff": 3.505,
+     "walk_p": 0.039,
+     "margin_scale": 1.6
+    },
+    "holdout": {
+     "elo": {
+      "learner": 1547.2,
+      "bayes_sharp": 1452.8,
+      "hardball": 1500.0
+     },
+     "per_anchor": {
+      "bayes_sharp": 0.656,
+      "hardball": 0.544
+     },
+     "metrics": {
+      "avg_payoff": 10.79,
+      "deal_rate": 0.419,
+      "zopa_deal_rate": 0.54,
+      "nozopa_walk_rate": 1.0,
+      "capture": 0.431,
+      "sucker_rate": 0.0,
+      "bluff_rate": 0.0,
+      "rounds_to_deal": 4.0,
+      "conc_after_bluff": null,
+      "conc_after_honest": 3.25,
+      "illegal_rate": 0.0
+     },
+     "n_games": 240
+    }
+   }
+  }
+ ]
+}

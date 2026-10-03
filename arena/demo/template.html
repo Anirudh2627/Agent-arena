@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArena — Multi-agent negotiation under conflicting incentives</title>
+<style>
+:root{
+  --bg:#0d1017; --panel:#151a23; --panel2:#1c2333; --line:#2a3345;
+  --text:#dbe4f0; --dim:#8494ab; --faint:#59677e;
+  --blue:#5aa7ff; --orange:#ffb454; --green:#4ade80; --red:#f87171; --purple:#c084fc;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{background:var(--bg); color:var(--text);
+  font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+code,pre,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+header{padding:22px 28px 14px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#121725 0%,var(--bg) 100%);}
+header h1{font-size:20px; letter-spacing:.2px;}
+header h1 .accent{color:var(--blue);}
+header .sub{color:var(--dim); margin-top:4px; max-width:900px;}
+.chips{margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;}
+.chip{background:var(--panel2); border:1px solid var(--line); color:var(--dim);
+  padding:2px 10px; border-radius:999px; font-size:12px;}
+nav{display:flex; gap:4px; padding:10px 28px 0; border-bottom:1px solid var(--line); flex-wrap:wrap; align-items:center;}
+nav button{background:none; border:none; color:var(--dim); padding:8px 14px; cursor:pointer;
+  font-size:14px; border-bottom:2px solid transparent;}
+nav button.active{color:var(--text); border-bottom-color:var(--blue);}
+nav .spacer{flex:1;}
+.gameswitch{display:flex; gap:6px; padding:6px 0;}
+.gameswitch button{background:var(--panel); border:1px solid var(--line); color:var(--dim);
+  padding:4px 12px; border-radius:8px; cursor:pointer; font-size:13px;}
+.gameswitch button.active{color:#0d1017; background:var(--blue); border-color:var(--blue); font-weight:600;}
+main{padding:20px 28px 60px; max-width:1500px; margin:0 auto;}
+section.tab{display:none;} section.tab.active{display:block;}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:18px;}
+.card h2{font-size:15px; margin-bottom:4px;}
+.card h3{font-size:13px; color:var(--dim); text-transform:uppercase; letter-spacing:.8px; margin:14px 0 8px;}
+.card .note{color:var(--dim); font-size:12.5px; margin-bottom:10px;}
+table{border-collapse:collapse; width:100%;}
+th,td{padding:6px 10px; text-align:left; border-bottom:1px solid var(--line); font-size:13px; white-space:nowrap;}
+th{color:var(--dim); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.5px;}
+td.num,th.num{text-align:right; font-variant-numeric:tabular-nums;}
+tr:hover td{background:#182031;}
+.elobar{position:relative; height:14px; background:var(--panel2); border-radius:7px; min-width:180px; overflow:hidden;}
+.elobar .fill{position:absolute; left:0; top:0; bottom:0; background:linear-gradient(90deg,#2f6db3,var(--blue)); border-radius:7px;}
+.elobar .ci{position:absolute; top:0; bottom:0; border-left:2px solid rgba(255,255,255,.55); border-right:2px solid rgba(255,255,255,.55); background:rgba(255,255,255,.08);}
+.good{color:var(--green);} .bad{color:var(--red);} .muted{color:var(--dim);}
+.matrix td{text-align:center; padding:0;}
+.matrix .cell{width:100%; height:34px; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-variant-numeric:tabular-nums; cursor:default;}
+.matrix .diag{background:var(--panel2); color:var(--faint);}
+.matrix th.rowh{text-align:right; padding-right:10px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+.grid3{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px;}
+@media(max-width:980px){.grid2{grid-template-columns:1fr;}}
+/* replays */
+.replaywrap{display:grid; grid-template-columns:270px 1fr 340px; gap:16px; align-items:start;}
+@media(max-width:1200px){.replaywrap{grid-template-columns:1fr;}}
+.rlist{max-height:720px; overflow-y:auto;}
+.ritem{padding:10px 12px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; cursor:pointer; background:var(--panel2);}
+.ritem.active{border-color:var(--blue); background:#1a2740;}
+.ritem .t{font-weight:600; font-size:13px;}
+.ritem .s{color:var(--dim); font-size:12px; margin-top:2px;}
+.tags{margin-top:6px; display:flex; gap:4px; flex-wrap:wrap;}
+.tag{font-size:10.5px; padding:1px 8px; border-radius:999px; border:1px solid var(--line); color:var(--dim); background:var(--panel);}
+.tag.hot{color:var(--orange); border-color:#5a4526;} .tag.cool{color:var(--blue); border-color:#2c466e;}
+.tag.good{color:var(--green); border-color:#2c5a3c;} .tag.bad{color:var(--red); border-color:#5a2c2c;}
+.controls{display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap;}
+.controls button{background:var(--panel2); color:var(--text); border:1px solid var(--line);
+  border-radius:8px; padding:5px 12px; cursor:pointer; font-size:13px;}
+.controls button:hover{border-color:var(--blue);}
+.controls input[type=range]{flex:1; min-width:160px; accent-color:var(--blue);}
+.controls label{color:var(--dim); font-size:12.5px; display:flex; gap:5px; align-items:center; cursor:pointer;}
+.statebar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;}
+.pip{padding:3px 10px; border-radius:8px; background:var(--panel2); border:1px solid var(--line); font-size:12px; color:var(--dim);}
+.pip b{color:var(--text);}
+.pip.done{border-color:#31465f;}
+.bubble{border:1px solid var(--line); border-radius:12px; padding:10px 14px; margin-bottom:10px; background:var(--panel2); border-left:4px solid var(--line);}
+.bubble.buyer,.bubble.p0{border-left-color:var(--blue);}
+.bubble.seller,.bubble.p1{border-left-color:var(--orange);}
+.bubble.future{opacity:.28;}
+.bubble .head{display:flex; gap:8px; align-items:baseline; flex-wrap:wrap;}
+.bubble .who{font-weight:700; font-size:13px;}
+.bubble.buyer .who,.bubble.p0 .who{color:var(--blue);} .bubble.seller .who,.bubble.p1 .who{color:var(--orange);}
+.bubble .act{font-size:12px; color:var(--dim);}
+.bubble .price{font-size:20px; font-weight:800; font-variant-numeric:tabular-nums;}
+.bubble .msg{margin-top:6px; font-style:italic; color:#c3cfe0; background:#121826; border:1px dashed var(--line); padding:6px 10px; border-radius:8px; font-size:13px;}
+.bubble details{margin-top:8px;}
+.bubble summary{cursor:pointer; color:var(--dim); font-size:12px;}
+.bubble .reason{margin-top:6px; font-size:12.5px; color:#aebbd0; white-space:pre-wrap;}
+.claimchip{display:inline-block; margin-top:6px; font-size:11.5px; padding:2px 9px; border-radius:999px; border:1px solid var(--line); color:var(--dim);}
+.claimchip.bluff{color:var(--red); border-color:#5a2c2c; background:#241418;}
+.claimchip.honest{color:var(--green); border-color:#2c5a3c;}
+.outcome{border:1px solid var(--line); border-radius:12px; padding:14px 16px; background:linear-gradient(180deg,#182031,var(--panel2)); margin-top:4px;}
+.outcome h3{margin:0 0 8px; color:var(--text); text-transform:none; font-size:15px; letter-spacing:0;}
+.paybars{display:flex; flex-direction:column; gap:6px; margin-top:8px;}
+.payrow{display:flex; align-items:center; gap:8px; font-size:12.5px;}
+.payrow .nm{width:130px; color:var(--dim);}
+.payrow .bar{height:14px; border-radius:4px; min-width:2px;}
+.side .card{margin-bottom:14px;}
+.truth .v{font-size:22px; font-weight:800;}
+.hist-cap{color:var(--dim); font-size:11.5px; margin-top:4px;}
+.kv{display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px dashed #222b3d; font-size:12.5px;}
+.kv .k{color:var(--dim);} .kv .v{font-variant-numeric:tabular-nums;}
+.about pre{background:#10151f; border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto; font-size:12px; line-height:1.45; color:#b9c6da;}
+.about p{margin:8px 0; color:#c3cfe0;}
+.about ul{margin:8px 0 8px 22px; color:#c3cfe0;}
+.about li{margin:4px 0;}
+.legend{display:flex; gap:14px; color:var(--dim); font-size:12px; margin-top:6px; flex-wrap:wrap;}
+.dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px;}
+svg text{font-family:ui-monospace,Menlo,Consolas,monospace;}
+.small{font-size:12px; color:var(--dim);}
+.blottoreveal table td{font-variant-numeric:tabular-nums;}
+.win{color:var(--green); font-weight:700;} .lose{color:var(--faint);} .tie{color:var(--orange);}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="accent">AgentArena</span> — multi-agent negotiation under conflicting incentives</h1>
+  <div class="sub">Imperfect-information games (deadline bargaining &amp; Colonel Blotto) · duplicate-deal tournaments ·
+    Bradley-Terry Elo with bootstrap CIs · belief-tracking agents · reward-weighted self-play with population ablations ·
+    step-through replays with private reasoning.</div>
+  <div class="chips" id="metachips"></div>
+</header>
+<nav id="nav"></nav>
+<main>
+  <section class="tab" id="tab-leaderboard"></section>
+  <section class="tab" id="tab-matrix"></section>
+  <section class="tab" id="tab-metrics"></section>
+  <section class="tab" id="tab-replays"></section>
+  <section class="tab" id="tab-selfplay"></section>
+  <section class="tab" id="tab-about"></section>
+</main>
+<script>
+const DATA = /*__DATA__*/null;
+"use strict";
+const $ = (s,el=document)=>el.querySelector(s);
+const h = (tag, attrs={}, ...kids)=>{ const e=document.createElement(tag);
+  for(const [k,v] of Object.entries(attrs||{})){ if(k==="class")e.className=v; else if(k==="html")e.innerHTML=v; else if(k.startsWith("on"))e.addEventListener(k.slice(2),v); else if(v!==undefined&&v!==null)e.setAttribute(k,v);}
+  for(const kid of kids.flat(9)){ if(kid==null||kid===false)continue; e.append(kid.nodeType?kid:document.createTextNode(kid)); } return e; };
+const fmt=(x,d=2)=> x==null?"—":(typeof x==="number"? (Number.isInteger(x)?x:x.toFixed(d)) : x);
+const pct=x=> x==null?"—":(100*x).toFixed(0)+"%";
+
+const GAMES = Object.keys(DATA.games);
+const state = { game: GAMES.includes("bargaining")?"bargaining":GAMES[0], tab:"leaderboard",
+                replayIdx:0, step:0, reveal:false, playing:false, timer:null };
+const G = ()=> DATA.games[state.game];
+const disp = n => (G().display||{})[n] || n;
+
+/* ---------------- nav ---------------- */
+const TABS=[["leaderboard","🏆 Leaderboard"],["matrix","🔥 Win-rate matrix"],["metrics","📊 Strategy metrics"],
+            ["replays","🎬 Replays"],["selfplay","🧬 Self-play"],["about","ℹ️ About & methods"]];
+function renderNav(){
+  const nav=$("#nav"); nav.innerHTML="";
+  for(const [id,label] of TABS)
+    nav.append(h("button",{class:id===state.tab?"active":"", onclick:()=>{state.tab=id; renderNav(); renderTab();}},label));
+  nav.append(h("div",{class:"spacer"}));
+  const sw=h("div",{class:"gameswitch"});
+  for(const g of GAMES){
+    const label = g==="bargaining" ? "Deadline Bargaining" : g==="blotto" ? "Colonel Blotto" : g;
+    sw.append(h("button",{class:g===state.game?"active":"", onclick:()=>{state.game=g; state.replayIdx=0; state.step=0; renderNav(); renderTab();}},label));
+  }
+  nav.append(sw);
+}
+function renderChips(){
+  const m=DATA.meta, c=$("#metachips"); c.innerHTML="";
+  const chips=[`built ${m.built_at}`, `${m.total_games} games`, `${m.seeds} duplicate seeds/pair`,
+               `Elo: Bradley-Terry + ${m.bootstrap_iters}× bootstrap`, `python ${m.python}`, `runtime ${m.total_runtime_s}s`];
+  for(const t of chips) c.append(h("span",{class:"chip"},t));
+}
+function renderTab(){
+  for(const [id] of TABS) $("#tab-"+id).classList.toggle("active", id===state.tab);
+  const el=$("#tab-"+state.tab); el.innerHTML="";
+  ({leaderboard:renderLeaderboard, matrix:renderMatrix, metrics:renderMetrics,
+    replays:renderReplays, selfplay:renderSelfplay, about:renderAbout}[state.tab])(el);
+}
+
+/* ---------------- leaderboard ---------------- */
+function renderLeaderboard(el){
+  const g=G();
+  const order=[...g.agents].sort((a,b)=>g.elo[b]-g.elo[a]);
+  const lo=Math.min(...order.map(a=>g.ci[a][0]))-40, hi=Math.max(...order.map(a=>g.ci[a][1]))+40;
+  el.append(h("div",{class:"card"},
+    h("h2",{},g.title),
+    h("div",{class:"note"},`${g.games_played} games · round-robin, every pair plays the same ${DATA.meta.seeds} seeded scenarios with seats swapped (duplicate deals) · Elo = Bradley-Terry MLE anchored to mean 1500; bars show 95% bootstrap CIs.`),
+    h("table",{},
+      h("thead",{},h("tr",{},h("th",{},"#"),h("th",{},"Agent"),h("th",{},"Elo (95% CI)"),
+        h("th",{},"rating"),h("th",{class:"num"},"W-D-L"),h("th",{class:"num"},"avg payoff"),h("th",{class:"num"},"games"))),
+      h("tbody",{},order.map((a,i)=>{
+        const [cl,ch]=g.ci[a];
+        const bar=h("div",{class:"elobar"},
+          h("div",{class:"fill",style:`width:${(100*(g.elo[a]-lo)/(hi-lo)).toFixed(1)}%`}),
+          h("div",{class:"ci",style:`left:${(100*(cl-lo)/(hi-lo)).toFixed(1)}%;width:${(100*(ch-cl)/(hi-lo)).toFixed(1)}%`}));
+        const wdl=g.wdl[a];
+        return h("tr",{},h("td",{},String(i+1)),
+          h("td",{},h("b",{},disp(a))),
+          h("td",{class:"num mono"},`${g.elo[a].toFixed(0)} [${cl.toFixed(0)}, ${ch.toFixed(0)}]`),
+          h("td",{},bar),
+          h("td",{class:"num"},`${wdl.w}-${wdl.d}-${wdl.l}`),
+          h("td",{class:"num"},fmt(g.avg_payoff[a])),
+          h("td",{class:"num muted"},String(g.games_per_agent)));
+      })))
+  ));
+  el.append(h("div",{class:"card"},h("h3",{},"How to read this"),
+    h("p",{class:"small"},"Elo here answers “who negotiated better on the same hand”, not “who solved a task”. Each game’s head-to-head outcome is decided by comparing the two agents’ payoffs in that one game (win/draw/loss). Because every pair replays identical private-information scenarios, differences reflect strategy, not luck of the draw.")));
+}
+
+/* ---------------- matrix ---------------- */
+function rateColor(r){
+  // 0 -> red, .5 -> neutral panel, 1 -> green
+  if(r>=0.5){const t=(r-0.5)*2; return `rgb(${Math.round(28+30*(1-t))},${Math.round(35+130*t)},${Math.round(49+60*(1-t))})`;}
+  const t=(0.5-r)*2; return `rgb(${Math.round(28+140*t)},${Math.round(35+30*(1-t))},${Math.round(49+40*(1-t))})`;
+}
+function renderMatrix(el){
+  const g=G(), {names,rate,count}=g.matrix;
+  const table=h("table",{class:"matrix"},h("thead",{},h("tr",{},h("th",{class:"rowh"},"row ▼ vs col ▶"),
+    ...names.map(n=>h("th",{},disp(n))))));
+  const tb=h("tbody",{});
+  names.forEach((a,i)=>{
+    const tr=h("tr",{},h("th",{class:"rowh"},disp(a)));
+    names.forEach((b,j)=>{
+      if(i===j){tr.append(h("td",{},h("div",{class:"cell diag"},"—")));return;}
+      const r=rate[i][j], n=count[i][j];
+      tr.append(h("td",{},h("div",{class:"cell",style:`background:${rateColor(r)}`,
+        title:`${disp(a)} vs ${disp(b)}: score rate ${(100*r).toFixed(1)}% over ${n} games`},(100*r).toFixed(0))));
+    });
+    tb.append(tr);
+  });
+  table.append(tb);
+  el.append(h("div",{class:"card"},h("h2",{},"Head-to-head score rates (%)"),
+    h("div",{class:"note"},"Cell = row agent’s score rate vs column agent (1.0 = won every game, 0.5 = even). Same seeded scenarios for every pair; seats swapped. Hover for game counts."),
+    table,
+    h("div",{class:"legend"},
+      h("span",{},h("span",{class:"dot",style:"background:#4ade80"}),"row dominates"),
+      h("span",{},h("span",{class:"dot",style:"background:#2a3345"}),"even"),
+      h("span",{},h("span",{class:"dot",style:"background:#f87171"},"column dominates")))));
+}
+
+/* ---------------- metrics ---------------- */
+function metricCell(v,cls){return h("td",{class:"num "+(cls||"")},typeof v==="number"? (v>1?fmt(v):pct(v)) : fmt(v));}
+function renderBargainingMetrics(el,g){
+  const order=[...g.metrics].sort((a,b)=>g.elo[b.agent]-g.elo[a.agent]);
+  const cols=[["deal_rate","Deal %",""],
+    ["zopa_deal_rate","ZOPA deal % (efficiency)",""],
+    ["nozopa_walk_rate","No-ZOPA walk % (discipline)","good"],
+    ["capture","Surplus capture",""],
+    ["sucker_rate","Sucker rate (neg. deals)","bad"],
+    ["bluff_rate","Bluff rate",""],
+    ["rounds_to_deal","Rounds→deal",""],
+    ["conc_after_bluff","Opp. move after bluff",""],
+    ["conc_after_honest","Opp. move after honesty",""],
+    ["illegal_rate","Illegal %","bad"]];
+  el.append(h("div",{class:"card"},h("h2",{},"Strategic quality — beyond win rate"),
+    h("div",{class:"note"},"Efficiency = deals closed among hands where trade was profitable. Discipline = walking away when no ZOPA exists (closing such a deal is strictly worse than 0). Capture = mean share of the realized surplus kept. Sucker rate = deals with negative own payoff. Bluff rate = fraction of stated reservation claims that were false by ≥10 vs the agent’s true limit. “Opp. move after bluff/honesty” = mean opponent concession (price units, favorable) following that agent’s claims — a noisy bluff-effectiveness signal."),
+    h("table",{},h("thead",{},h("tr",{},h("th",{},"Agent"),...cols.map(c=>h("th",{class:"num"},c[1])))),
+      h("tbody",{},order.map(m=>h("tr",{},h("td",{},h("b",{},disp(m.agent))),
+        ...cols.map(c=>{const v=m[c[0]];
+          return h("td",{class:"num",style:(c[0]==="sucker_rate"&&v>0.02)?"color:var(--red)":""},fmt(v));})))))
+  ));
+  // concession small-multiples
+  const wrap=h("div",{class:"grid3"});
+  for(const m of order){
+    wrap.append(concessionCard(m,g));
+  }
+  el.append(h("div",{class:"card"},h("h2",{},"Concession curves (mean offer by own proposal #, ZOPA hands only)"),
+    h("div",{class:"note"},"Buyers (blue) start low and climb; sellers (orange) start high and fall. Fast convergers close early and keep more of the discounted pie; flat lines are hardliners."),
+    wrap));
+}
+function concessionCard(m,g){
+  const W=250,H=130,P={l:34,r:8,t:10,b:22};
+  const xs=k=>P.l+(k-1)*((W-P.l-P.r)/2);
+  const ys=p=>H-P.b-(p/160)*(H-P.t-P.b);
+  const svgns="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(svgns,"svg"); svg.setAttribute("width",W); svg.setAttribute("height",H); svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const add=(tag,attrs)=>{const e=document.createElementNS(svgns,tag); for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v); svg.append(e); return e;};
+  for(const p of [0,40,80,120,160]){ add("line",{x1:P.l,x2:W-P.r,y1:ys(p),y2:ys(p),stroke:"#222b3d","stroke-width":1});
+    const t=add("text",{x:4,y:ys(p)+3,fill:"#59677e","font-size":9}); t.textContent=p; }
+  for(const k of [1,2,3]){ const t=add("text",{x:xs(k)-3,y:H-6,fill:"#59677e","font-size":9}); t.textContent="#"+k; }
+  const line=(obj,color,dash)=>{
+    const ks=Object.keys(obj).map(Number).sort((a,b)=>a-b).filter(k=>obj[k]!=null);
+    if(!ks.length)return;
+    const pts=ks.map(k=>`${xs(k)},${ys(obj[k])}`).join(" ");
+    add("polyline",{points:pts,fill:"none",stroke:color,"stroke-width":2,"stroke-dasharray":dash||"","stroke-linejoin":"round"});
+    for(const k of ks) add("circle",{cx:xs(k),cy:ys(obj[k]),r:2.6,fill:color});
+  };
+  line(m.concession_buyer||{},"#5aa7ff"); line(m.concession_seller||{},"#ffb454","4 3");
+  return h("div",{class:"card",style:"margin:0"},
+    h("div",{style:"display:flex;justify-content:space-between;align-items:baseline"},
+      h("b",{},disp(m.agent)), h("span",{class:"small mono"},"payoff "+fmt(m.avg_payoff))),
+    svg,
+    h("div",{class:"legend"},
+      h("span",{},h("span",{class:"dot",style:"background:#5aa7ff"}),"as buyer"),
+      h("span",{},h("span",{class:"dot",style:"background:#ffb454"}),"as seller")));
+}
+function renderBlottoMetrics(el,g){
+  const order=[...g.metrics].sort((a,b)=>g.elo[b.agent]-g.elo[a.agent]);
+  el.append(h("div",{class:"card"},h("h2",{},"Strategic quality — Blotto"),
+    h("div",{class:"note"},"Constant-sum (100 points per game). Share = fraction captured. Underspent troops are pure waste. Rank profile = mean troops on the 1st…5th richest field."),
+    h("table",{},h("thead",{},h("tr",{},h("th",{},"Agent"),h("th",{class:"num"},"Avg share"),
+      h("th",{class:"num"},"Underspend"),h("th",{class:"num"},"Rank-1 field win %"),h("th",{class:"num"},"Rank-5 field win %"),h("th",{class:"num"},"Illegal %"),h("th",{},"Profile by field rank"))),
+      h("tbody",{},order.map(m=>{
+        const prof=(m.rank_profile||{}); const bars=h("div",{style:"display:flex;gap:3px;align-items:flex-end;height:34px"});
+        for(let k=1;k<=5;k++){const v=prof[String(k)]??prof[k]??0;
+          bars.append(h("div",{title:`rank-${k} field: ${v} troops avg`,style:`width:14px;height:${Math.max(2,v/30*34)}px;background:hsl(${210-30*(k-1)},70%,${58-6*(k-1)}%);border-radius:3px`}));}
+        const wr=m.rank_win_rate||{};
+        return h("tr",{},h("td",{},h("b",{},disp(m.agent))),
+          h("td",{class:"num"},pct(m.avg_share)),h("td",{class:"num"},fmt(m.underspend)),
+          h("td",{class:"num"},pct(wr["1"]??wr[1])),h("td",{class:"num"},pct(wr["5"]??wr[5])),
+          h("td",{class:"num"},pct(m.illegal_rate)),h("td",{},bars));})))
+  ));
+}
+function renderMetrics(el){
+  const g=G();
+  if(g.name==="bargaining") renderBargainingMetrics(el,g); else renderBlottoMetrics(el,g);
+}
+
+/* ---------------- replays ---------------- */
+function summaryLine(r){
+  if(r.game==="bargaining"){
+    const t=r.truth;
+    if(t.deal) return `deal @ ${t.deal.price} (round ${t.deal.t}) · buyer ${fmt(r.payoffs.buyer,1)} / seller ${fmt(r.payoffs.seller,1)}`;
+    return `no deal · ${t.walked_by? t.walked_by+" walked":"deadline"} · ${t.has_zopa?"ZOPA existed!":"no ZOPA (correct: walk)"}`;
+  }
+  return `p0 ${fmt(r.payoffs.p0,0)} : ${fmt(r.payoffs.p1,0)} p1`;
+}
+function tagClass(t){
+  if(["sucker_deal"].includes(t))return "bad";
+  if(["bluff_used","deadline_deal","concentrated"].includes(t))return "hot";
+  if(["nozopa_discipline","dominant_buyer","dominant_seller"].includes(t))return "good";
+  return "cool";
+}
+function renderReplays(el){
+  const g=G(); const reps=g.replays||[];
+  const wrap=h("div",{class:"replaywrap"});
+  const list=h("div",{class:"rlist"});
+  if(!reps.length) list.append(h("div",{class:"small"},"no replays exported for this game"));
+  reps.forEach((r,i)=>{
+    list.append(h("div",{class:"ritem"+(i===state.replayIdx?" active":""), onclick:()=>{state.replayIdx=i; state.step=0; stopPlay(); renderTab();}},
+      h("div",{class:"t"},Object.values(r.display||r.seats).join(" vs ")),
+      h("div",{class:"s mono"},"seed "+r.seed+" · "+summaryLine(r)),
+      h("div",{class:"tags"},(r.tags||[]).slice(0,5).map(t=>h("span",{class:"tag "+tagClass(t)},t)))));
+  });
+  const viewer=h("div",{id:"viewer"});
+  const side=h("div",{class:"side",id:"side"});
+  wrap.append(list,viewer,side);
+  el.append(wrap);
+  if(reps.length) renderReplay(reps[state.replayIdx],viewer,side);
+}
+function stopPlay(){ if(state.timer){clearInterval(state.timer); state.timer=null;} state.playing=false; }
+function controlsBar(r,maxStep){
+  const playBtn=h("button",{id:"playbtn", onclick:()=>{ if(state.playing){stopPlay(); updatePlayBtn(); return;}
+        state.playing=true; updatePlayBtn();
+        state.timer=setInterval(()=>{ if(state.step>=maxStep){stopPlay(); updatePlayBtn(); refreshReplay(); return;} state.step++; refreshReplay(); },2200);
+      }}, "▶ play");
+  const c=h("div",{class:"controls"},
+    h("button",{onclick:()=>{state.step=Math.max(0,state.step-1); stopPlay(); updatePlayBtn(); refreshReplay();}},"◀ step"),
+    playBtn,
+    h("button",{onclick:()=>{state.step=Math.min(maxStep,state.step+1); stopPlay(); updatePlayBtn(); refreshReplay();}},"step ▶"),
+    h("input",{type:"range",id:"stepslider",min:0,max:maxStep,value:state.step, oninput:e=>{state.step=+e.target.value; stopPlay(); updatePlayBtn(); refreshReplay();}}),
+    h("span",{class:"small mono",id:"stepcount"},`${state.step}/${maxStep}`),
+    h("label",{},h("input",{type:"checkbox",checked:state.reveal,onchange:e=>{state.reveal=e.target.checked; refreshReplay();}}),"reveal ground truth"));
+  return c;
+}
+function updatePlayBtn(){ const b=$("#playbtn"); if(b) b.textContent=state.playing?"⏸ pause":"▶ play"; }
+function refreshReplay(){
+  const r=G().replays[state.replayIdx]; if(!r)return;
+  const body=$("#rbody"), side=$("#side");
+  if(!body){renderTab(); return;}
+  body.innerHTML=""; side.innerHTML="";
+  drawBody(r,body,side);
+  const sc=$("#stepcount"); if(sc) sc.textContent=`${state.step}/${r.decisions.length}`;
+  const sl=$("#stepslider"); if(sl) sl.value=String(state.step);
+}
+function renderReplay(r,v,side){
+  state.step=Math.min(state.step,r.decisions.length);
+  v.append(controlsBar(r,r.decisions.length));
+  const body=h("div",{id:"rbody"});
+  v.append(body);
+  drawBody(r,body,side);
+}
+function drawBody(r,body,side){
+  if(r.game==="bargaining") bargainingView(r,body,side); else blottoView(r,body,side);
+}
+/* ---- bargaining replay ---- */
+function beliefPanel(d,r,side){
+  const b=d.belief||{};
+  const card=h("div",{class:"card"});
+  card.append(h("h3",{},disp(d.agent)+" — private belief @ step "+d.step));
+  if(b.posterior && b.posterior.grid){
+    card.append(posteriorSVG(b.posterior,r));
+    card.append(h("div",{class:"hist-cap"},"posterior over opponent’s reservation ("+(b.posterior.target==="seller_cost"?"seller cost c":"buyer value v")+"), rebuilt from the offer/rejection pattern each turn"));
+  }
+  const kvs=[];
+  if(b.mean!=null)kvs.push(["E[opp reservation]",fmt(b.mean,1)]);
+  if(b.p_zopa!=null)kvs.push(["P(ZOPA exists)",fmt(b.p_zopa,2)]);
+  if(b.p_accept_of_offer!=null)kvs.push(["P(accept | this offer)",fmt(b.p_accept_of_offer,2)]);
+  if(b.eu_of_offer!=null)kvs.push(["EU(offer)",fmt(b.eu_of_offer,1)]);
+  if(b.opp_res_est!=null)kvs.push(["opp reservation (point est.)",fmt(b.opp_res_est,1)]);
+  if(b.model)kvs.push(["model",b.model]);
+  if(b.level)kvs.push(["level-k",b.level]);
+  if(b.parse_failure)kvs.push(["⚠ parse failure","engine fallback used"]);
+  if(b.illegal_move)kvs.push(["⚠ illegal move rejected",String(b.illegal_move).slice(0,40)]);
+  for(const [k,val] of kvs) card.append(h("div",{class:"kv"},h("span",{class:"k"},k),h("span",{class:"v mono"},String(val))));
+  if(b.claims && b.claims.reservation!=null){
+    const isBuyerSeat=d.seat==="buyer";
+    let bluff=null;
+    if(state.reveal){
+      const truthRes=isBuyerSeat?r.truth.v:r.truth.c;
+      bluff=isBuyerSeat? b.claims.reservation<=truthRes-10 : b.claims.reservation>=truthRes+10;
+    }
+    card.append(h("div",{},h("span",{class:"claimchip"+(bluff==null?"":bluff?" bluff":" honest")},
+      `cheap-talk claim: ${isBuyerSeat?"ceiling":"floor"} = ${b.claims.reservation}`+
+      (bluff==null?"":bluff?`  ✗ BLUFF (true ${isBuyerSeat?r.truth.v:r.truth.c})`:`  ✓ honest (true ${isBuyerSeat?r.truth.v:r.truth.c})`))));
+  }
+  side.append(card);
+}
+function posteriorSVG(post,r){
+  const W=300,Hh=90,P={l:6,r:6,t:8,b:16};
+  const svgns="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(svgns,"svg"); svg.setAttribute("width","100%"); svg.setAttribute("height",Hh); svg.setAttribute("viewBox",`0 0 ${W} ${Hh}`);
+  const add=(tag,attrs)=>{const e=document.createElementNS(svgns,tag); for(const[k,vv]of Object.entries(attrs))e.setAttribute(k,vv); svg.append(e); return e;};
+  const grid=post.grid, probs=post.probs; const mx=Math.max(...probs,1e-9);
+  const bw=(W-P.l-P.r)/grid.length;
+  const target=post.target==="seller_cost"?r.truth.c:r.truth.v;
+  grid.forEach((x,i)=>{
+    const bh=(probs[i]/mx)*(Hh-P.t-P.b);
+    const revealed=state.reveal;
+    const nearTruth=revealed && Math.abs(x-target)<=2;
+    add("rect",{x:P.l+i*bw+0.5,y:Hh-P.b-bh,width:Math.max(1,bw-1),height:Math.max(0.5,bh),
+      fill:nearTruth?"#c084fc":"#3f77c9",rx:1,opacity:nearTruth?1:0.85});
+  });
+  if(state.reveal){
+    const tx=P.l+((target-grid[0])/(grid[grid.length-1]-grid[0]||1))*(W-P.l-P.r);
+    add("line",{x1:tx,x2:tx,y1:P.t-4,y2:Hh-P.b,stroke:"#c084fc","stroke-width":1.5,"stroke-dasharray":"3 2"});
+    const t=add("text",{x:Math.min(W-30,Math.max(2,tx-8)),y:P.t+2,fill:"#c084fc","font-size":9}); t.textContent="truth "+target;
+  }
+  for(const x of [grid[0],grid[Math.floor(grid.length/2)],grid[grid.length-1]]){
+    const tx=P.l+((x-grid[0])/(grid[grid.length-1]-grid[0]||1))*(W-P.l-P.r);
+    const t=add("text",{x:Math.min(W-14,Math.max(0,tx-6)),y:Hh-4,fill:"#59677e","font-size":9}); t.textContent=x;
+  }
+  return svg;
+}
+function bargainingView(r,v,side){
+  const t=r.truth;
+  // state bar
+  const curStep=state.step;
+  const lastDec=r.decisions.filter(d=>d.step<=curStep).slice(-1)[0];
+  const roundNow=lastDec?Math.min(6,lastDec.step):0;
+  const pips=[];
+  for(let k=1;k<=6;k++) pips.push(h("span",{class:"pip"+(k<=roundNow?" done":"")},"R"+k+(k<=roundNow?" ✓":"")));
+  const disc=DELTA_POW[Math.max(0,Math.min(6,roundNow))];
+  v.append(h("div",{class:"statebar"},
+    h("span",{class:"pip"},"🎲 seed <b>"+r.seed+"</b>"),
+    ...pips,
+    h("span",{class:"pip"},"pie ×<b>"+ (roundNow? disc.toFixed(2):"1.00") +"</b>"),
+    h("span",{class:"pip"},"δ=0.9/round · 6 proposals")));
+  // private state (side)
+  side.append(h("div",{class:"card truth"},h("h3",{},"Ground truth "+(state.reveal?"(revealed)":"(hidden)")),
+    state.reveal?
+      h("div",{},
+        h("div",{class:"kv"},h("span",{class:"k"},"buyer value v"),h("span",{class:"v mono",style:"color:var(--blue)"},t.v)),
+        h("div",{class:"kv"},h("span",{class:"k"},"seller cost c"),h("span",{class:"v mono",style:"color:var(--orange)"},t.c)),
+        h("div",{class:"kv"},h("span",{class:"k"},"ZOPA (v−c)"),h("span",{class:"v mono "+(t.has_zopa?"good":"bad")},t.zopa+(t.has_zopa?"":" — no profitable deal exists"))),
+        h("div",{class:"hist-cap"},"Agents never see this panel at runtime — it is reconstructed by the analysis layer from engine truth()."))
+      :
+      h("div",{class:"small"},"Tick “reveal ground truth” in the controls to expose private values and check claims for bluffs.")));
+  // transcript
+  const tr=h("div",{});
+  const shown=r.decisions.filter(d=>d.step<=curStep);
+  let lastBeliefBySeat={};
+  for(const d of r.decisions){
+    const visible=d.step<=curStep;
+    if(visible) lastBeliefBySeat[d.seat]=d;
+    const bub=h("div",{class:"bubble "+d.seat+(visible?"":" future")});
+    const who=disp(d.agent)+" ("+d.seat+")";
+    let head=h("div",{class:"head"},h("span",{class:"who"},who),
+      h("span",{class:"act"},"step "+d.step+" · "+d.kind+(d.kind==="propose"?" · round "+ (d.params.t||d.step):"")));
+    if(d.kind==="propose") head.append(h("span",{class:"price mono"}," "+d.params.price));
+    bub.append(head);
+    if(d.message) bub.append(h("div",{class:"msg"},"💬 “"+d.message+"”"));
+    if(visible){
+      bub.append(h("details",{open:d.step===curStep},h("summary",{},"🧠 internal reasoning"+((d.belief&&d.belief.claims)?" + claim":"")),
+        h("div",{class:"reason"},d.reasoning||"(none)")));
+    }
+    if((d.belief||{}).illegal_move) bub.append(h("div",{class:"claimchip bluff"},"⚠ illegal move rejected by engine: "+d.belief.illegal_move));
+    tr.append(bub);
+  }
+  if(curStep===0) tr.prepend(h("div",{class:"small",style:"margin-bottom:10px"},"Press ▶ play or step through to watch the negotiation unfold. Ghosted bubbles are future turns."));
+  // outcome
+  if(curStep>=r.decisions.length){
+    const dealt=t.deal!=null;
+    const ob=h("div",{class:"outcome"},h("h3",{},dealt?`✅ DEAL at price ${t.deal.price} (round ${t.deal.t})`:(t.walked_by?`🚪 ${t.walked_by.toUpperCase()} WALKED AWAY — no deal`:"⏰ DEADLINE — no deal")));
+    if(dealt){
+      const share=t.has_zopa&&t.zopa>0? Math.max(r.payoffs.buyer,r.payoffs.seller)/t.zopa:null;
+      ob.append(h("div",{class:"small"},`buyer ${fmt(r.payoffs.buyer,1)} · seller ${fmt(r.payoffs.seller,1)}`+
+        (share!=null?` · winner captured ${(100*share).toFixed(0)}% of the ${t.zopa}-point ZOPA`:"")));
+    } else {
+      ob.append(h("div",{class:"small"},t.has_zopa?"A profitable deal existed and was missed — efficiency failure.":"No ZOPA existed: 0-0 is the rational outcome. Both kept discipline."));
+    }
+    const mx=Math.max(Math.abs(r.payoffs.buyer),Math.abs(r.payoffs.seller),1);
+    ob.append(h("div",{class:"paybars"},
+      payRow("buyer ("+disp(r.seats.buyer)+")",r.payoffs.buyer,mx,"var(--blue)"),
+      payRow("seller ("+disp(r.seats.seller)+")",r.payoffs.seller,mx,"var(--orange)")));
+    tr.append(ob);
+  }
+  v.append(tr);
+  // beliefs side panel: latest per seat
+  for(const seat of ["buyer","seller"]){
+    const d=lastBeliefBySeat[seat];
+    if(d) beliefPanel(d,r,side);
+  }
+}
+const DELTA_POW=[1,0.9,0.81,0.729,0.6561,0.59049,0.531441];
+function payRow(nm,val,mx,color){
+  const w=Math.round(160*Math.abs(val)/mx);
+  return h("div",{class:"payrow"},h("span",{class:"nm"},nm),
+    h("div",{class:"bar",style:`width:${w}px;background:${val<0?"var(--red)":color}`}),
+    h("span",{class:"mono"},fmt(val,1)));
+}
+/* ---- blotto replay ---- */
+function blottoView(r,v,side){
+  const t=r.truth;
+  v.append(h("div",{class:"statebar"},
+    h("span",{class:"pip"},"🎲 seed <b>"+r.seed+"</b>"),
+    h("span",{class:"pip"},"budget <b>60</b> · 5 fields · simultaneous sealed bids"),
+    ...t.values.map((val,i)=>h("span",{class:"pip"},"field "+(i+1)+" = <b>"+val+"</b>"))));
+  side.append(h("div",{class:"card truth"},h("h3",{},"Ground truth "+(state.reveal?"(revealed)":"(hidden until reveal)")),
+    state.reveal?
+      h("div",{},...["p0","p1"].map(s=>h("div",{class:"kv"},h("span",{class:"k"},s+" = "+disp(r.seats[s])),
+        h("span",{class:"v mono"},"["+t.allocations[s].join(", ")+"]"))),
+        h("div",{class:"hist-cap"},"Allocations are sealed until both submit — the engine reveals them together."))
+      : h("div",{class:"small"},"Allocations stay sealed until the reveal step.")));
+  const shown=r.decisions.filter(d=>d.step<=state.step);
+  const grid=h("div",{class:"grid2"});
+  for(const d of r.decisions){
+    const visible=d.step<=state.step;
+    const card=h("div",{class:"bubble "+d.seat+(visible?"":" future")},
+      h("div",{class:"head"},h("span",{class:"who"},disp(d.agent)),h("span",{class:"act"},d.seat+" · sealed plan")),
+      visible? h("details",{open:true},h("summary",{},"🧠 internal reasoning"),h("div",{class:"reason"},d.reasoning||"(none)"))
+             : h("div",{class:"small"},"(not yet submitted)"));
+    grid.append(card);
+    if(visible&&d.belief&&Object.keys(d.belief).length) beliefPanel(d,r,side);
+  }
+  v.append(grid);
+  if(state.step>=r.decisions.length&&t.field_results){
+    const ob=h("div",{class:"outcome blottoreveal"},h("h3",{},"🥁 Reveal — field by field"));
+    const tbl=h("table",{},h("thead",{},h("tr",{},h("th",{},"field"),h("th",{class:"num"},"value"),
+      h("th",{class:"num"},disp(r.seats.p0)+" (p0)"),h("th",{class:"num"},disp(r.seats.p1)+" (p1)"),h("th",{},"winner"))));
+    const tb=h("tbody",{});
+    t.field_results.forEach(fr=>{
+      const w=fr.winner;
+      tb.append(h("tr",{},h("td",{},"#"+(fr.field+1)),h("td",{class:"num"},fr.value),
+        h("td",{class:"num "+(w==="p0"?"win":w==="tie"?"tie":"lose")},fr.p0_troops),
+        h("td",{class:"num "+(w==="p1"?"win":w==="tie"?"tie":"lose")},fr.p1_troops),
+        h("td",{class:w==="tie"?"tie":"win"},w==="tie"?"tie (split)":disp(r.seats[w]))));
+    });
+    tbl.append(tb); ob.append(tbl);
+    const mx=Math.max(r.payoffs.p0,r.payoffs.p1,1);
+    ob.append(h("div",{class:"paybars"},
+      payRow(disp(r.seats.p0)+" (p0)",r.payoffs.p0,mx,"var(--blue)"),
+      payRow(disp(r.seats.p1)+" (p1)",r.payoffs.p1,mx,"var(--orange)")));
+    v.append(ob);
+  }
+}
+
+/* ---------------- self-play ---------------- */
+function svgLine(series, opts={}){
+  const W=opts.W||560, H=opts.H||220, P={l:46,r:12,t:14,b:26};
+  const allY=series.flatMap(s=>s.pts.map(p=>p[1])).filter(y=>y!=null);
+  const allX=series.flatMap(s=>s.pts.map(p=>p[0]));
+  if(!allY.length) return h("div",{class:"small"},"no data");
+  let ymin=opts.ymin!=null?opts.ymin:Math.min(...allY), ymax=opts.ymax!=null?opts.ymax:Math.max(...allY);
+  if(ymin===ymax){ymin-=1;ymax+=1;}
+  const padY=(ymax-ymin)*0.08; ymin-=padY; ymax+=padY;
+  const xmin=Math.min(...allX), xmax=Math.max(...allX, xmin+1);
+  const X=x=>P.l+(x-xmin)/(xmax-xmin)*(W-P.l-P.r);
+  const Y=y=>H-P.b-(y-ymin)/(ymax-ymin)*(H-P.t-P.b);
+  const svgns="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(svgns,"svg");
+  svg.setAttribute("width","100%"); svg.setAttribute("height",H); svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const add=(tag,attrs)=>{const e=document.createElementNS(svgns,tag); for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v); svg.append(e); return e;};
+  for(let i=0;i<=3;i++){
+    const y=ymin+(ymax-ymin)*i/3;
+    add("line",{x1:P.l,x2:W-P.r,y1:Y(y),y2:Y(y),stroke:"#222b3d","stroke-width":1});
+    const t=add("text",{x:2,y:Y(y)+3,fill:"#59677e","font-size":9}); t.textContent=opts.yfmt?opts.yfmt(y):y.toFixed(0);
+  }
+  for(const s of series){
+    const pts=s.pts.filter(p=>p[1]!=null).map(p=>`${X(p[0])},${Y(p[1])}`).join(" ");
+    if(pts) add("polyline",{points:pts,fill:"none",stroke:s.color,"stroke-width":s.width||2,
+      "stroke-dasharray":s.dash||"","stroke-linejoin":"round","stroke-linecap":"round"});
+    for(const p of s.pts.filter(p=>p[1]!=null)) add("circle",{cx:X(p[0]),cy:Y(p[1]),r:2.4,fill:s.color});
+  }
+  const xt=add("text",{x:W-P.r,y:H-6,fill:"#59677e","font-size":9,"text-anchor":"end"});
+  xt.textContent=opts.xlab||"";
+  return svg;
+}
+function legendRow(series){
+  return h("div",{class:"legend"},series.filter(s=>s.name).map(s=>
+    h("span",{},h("span",{class:"dot",style:`background:${s.color}`}),s.name)));
+}
+function renderSelfplay(el){
+  const sp=DATA.selfplay;
+  if(!sp){
+    el.append(h("div",{class:"card"},h("h2",{},"Self-play (RWR)"),
+      h("p",{class:"small"},"This build did not include a self-play run. Rebuild with: ",
+        h("code",{},"python3 run_demo.py --selfplay")," or run ",
+        h("code",{},"python3 -m arena.cli selfplay --gens 10 --out data/selfplay.json")," and merge into the payload.")));
+    return;
+  }
+  const gens=sp.gens, m=sp.meta;
+  const fin=sp.final||null;
+  const g0=gens[0], gN=gens[gens.length-1];
+  el.append(h("div",{class:"card"},h("h2",{},"Self-play: reward-weighted evolution of a learned negotiator"),
+    h("div",{class:"note"},`${m.algorithm} · ${m.gens} generations × population ${m.pop} · anchors: ${m.anchors.join(", ")} · `+
+      `training hands change every generation (no memorization); evaluation always on the SAME ${m.eval_seeds} fixed seeds → curves are comparable. · runtime ${m.runtime_s}s`),
+    h("div",{class:"chips"},...Object.entries(m.theta_bounds).map(([k,[lo,hi]])=>h("span",{class:"chip"},`${k} ∈ [${lo}, ${hi}]`)))));
+  // Elo drift
+  const eloSeries=[
+    {name:"learner (best particle)",color:"#5aa7ff",pts:gens.map(g=>[g.gen,g.eval.elo.learner])},
+    {name:"hardball (anchor)",color:"#ffb454",dash:"5 3",pts:gens.map(g=>[g.gen,g.eval.elo.hardball])},
+    {name:"bayes_sharp (anchor)",color:"#c084fc",dash:"5 3",pts:gens.map(g=>[g.gen,g.eval.elo.bayes_sharp])},
+  ];
+  el.append(h("div",{class:"card"},h("h3",{},"Elo drift on the fixed evaluation ladder"),
+    svgLine(eloSeries,{xlab:"generation",H:240}),legendRow(eloSeries)));
+  // behavior drift
+  const beh=[
+    {name:"bluff rate (claims ≥10 pts false)",color:"#f87171",pts:gens.map(g=>[g.gen,g.eval.metrics.bluff_rate])},
+    {name:"surplus capture",color:"#4ade80",pts:gens.map(g=>[g.gen,g.eval.metrics.capture])},
+    {name:"no-ZOPA walk discipline",color:"#ffb454",dash:"4 3",pts:gens.map(g=>[g.gen,g.eval.metrics.nozopa_walk_rate])},
+    {name:"ZOPA efficiency",color:"#5aa7ff",dash:"4 3",pts:gens.map(g=>[g.gen,g.eval.metrics.zopa_deal_rate])},
+  ];
+  el.append(h("div",{class:"card"},h("h3",{},"Behavior drift (measured, not assumed — from the metrics battery)"),
+    svgLine(beh,{xlab:"generation",ymin:0,ymax:1.2,yfmt:y=>y.toFixed(1),H:230}),legendRow(beh)));
+  // theta trajectories
+  const bounds=m.theta_bounds, tgrid=h("div",{class:"grid3"});
+  const colors=["#5aa7ff","#f87171","#4ade80","#ffb454","#c084fc"];
+  Object.keys(bounds).forEach((k,i)=>{
+    const [lo,hi]=bounds[k];
+    tgrid.append(h("div",{class:"card",style:"margin:0"},
+      h("b",{},k), h("span",{class:"small"}," ∈ ["+lo+", "+hi+"]"),
+      svgLine([{name:null,color:colors[i%5],pts:gens.map(g=>[g.gen,g.theta[k]])}],
+              {ymin:lo,ymax:hi,H:120,W:260,yfmt:y=>y.toFixed(2)})));
+  });
+  el.append(h("div",{class:"card"},h("h3",{},"Genome of the best particle per generation"),tgrid));
+  // table
+  const rows=gens.map(g=>h("tr",{},
+    h("td",{class:"num"},String(g.gen)),
+    h("td",{class:"num mono"},String(g.eval.elo.learner)),
+    h("td",{class:"num"},fmt(g.fitness_best,1)),h("td",{class:"num muted"},fmt(g.fitness_mean,1)),
+    h("td",{class:"num"},pct(g.eval.per_anchor.hardball)),h("td",{class:"num"},pct(g.eval.per_anchor.bayes_sharp)),
+    h("td",{class:"num"},fmt(g.eval.metrics.capture,2)),h("td",{class:"num"},pct(g.eval.metrics.bluff_rate)),
+    h("td",{class:"num"},fmt(g.eval.metrics.avg_payoff,1)),
+    h("td",{class:"num mono"},`${g.theta.anchor.toFixed(2)} / ${g.theta.accept_mult.toFixed(2)} / ${g.theta.bluff.toFixed(0)} / ${g.theta.walk_p.toFixed(2)} / ${g.theta.margin_scale.toFixed(2)}`)));
+  el.append(h("div",{class:"card"},h("h3",{},"Generation log"),
+    h("table",{},h("thead",{},h("tr",{},h("th",{class:"num"},"gen"),h("th",{class:"num"},"eval Elo"),
+      h("th",{class:"num"},"train fit best"),h("th",{class:"num"},"mean"),
+      h("th",{class:"num"},"vs hardball"),h("th",{class:"num"},"vs bayes"),
+      h("th",{class:"num"},"capture"),h("th",{class:"num"},"bluff rate"),h("th",{class:"num"},"payoff"),
+      h("th",{class:"num"},"θ: anchor/acc/bluff/walk/margin"))),h("tbody",{},rows)),
+    h("div",{class:"note",style:"margin-top:8px"},"train fitness uses fresh hands each generation (not comparable across generations); eval columns use the fixed seed set (comparable).")));
+  // holdout card
+  if(fin){
+    const ho=fin.holdout;
+    const eloRows=Object.entries(ho.elo).sort((a,b)=>b[1]-a[1]).map(([a,e])=>
+      h("tr",{},h("td",{},a==="learner"?h("b",{style:"color:var(--blue)"},"Learner (champion)"):disp(a)),
+        h("td",{class:"num mono"},e.toFixed(1)),
+        h("td",{class:"num"},ho.per_anchor&&ho.per_anchor[a]!=null?pct(ho.per_anchor[a]):"—")));
+    el.append(h("div",{class:"card"},h("h3",{},"Final champion on the untouched holdout ("+ho.n_games+" games, seeds never used for selection)"),
+      h("div",{class:"note"},"Selection used the fixed yardstick (seeds 7000+); these numbers come from seeds 9000+, scored exactly once — the honest generalization estimate."),
+      h("div",{class:"grid2"},
+        h("div",{},h("table",{},h("thead",{},h("tr",{},h("th",{},"Agent"),h("th",{class:"num"},"Elo"),h("th",{class:"num"},"learner score vs"))),h("tbody",{},eloRows))),
+        h("div",{},
+          h("div",{class:"kv"},h("span",{class:"k"},"champion θ"),h("span",{class:"v mono"},Object.entries(fin.theta).map(([k,v])=>`${k}=${v}`).join("  "))),
+          h("div",{class:"kv"},h("span",{class:"k"},"bluff rate (measured)"),h("span",{class:"v"},pct(ho.metrics.bluff_rate))),
+          h("div",{class:"kv"},h("span",{class:"k"},"surplus capture"),h("span",{class:"v"},fmt(ho.metrics.capture,3))),
+          h("div",{class:"kv"},h("span",{class:"k"},"avg payoff"),h("span",{class:"v"},fmt(ho.metrics.avg_payoff,2))),
+          h("div",{class:"kv"},h("span",{class:"k"},"ZOPA efficiency"),h("span",{class:"v"},pct(ho.metrics.zopa_deal_rate))),
+          h("div",{class:"kv"},h("span",{class:"k"},"no-ZOPA discipline"),h("span",{class:"v"},pct(ho.metrics.nozopa_walk_rate))),
+          h("div",{class:"kv"},h("span",{class:"k"},"sucker rate"),h("span",{class:"v"},pct(ho.metrics.sucker_rate))),
+          h("div",{class:"kv"},h("span",{class:"k"},"illegal-move rate"),h("span",{class:"v"},pct(ho.metrics.illegal_rate)))))));
+  }
+  // population ablations
+  if(sp.ablations&&sp.ablations.length){
+    const cols=["#5aa7ff","#4ade80","#f87171","#c084fc"];
+    const series=[{name:"mixed + gullible (main)",color:cols[0],pts:gens.map(g=>[g.gen,g.theta.bluff])}];
+    sp.ablations.forEach((ab,i)=>series.push({name:ab.id,color:cols[(i+1)%cols.length],dash:"5 3",
+      pts:ab.gens.map(g=>[g.gen,g.theta.bluff])}));
+    const rows=sp.ablations.map(ab=>{
+      const ft=ab.final.theta, ho=ab.final.holdout;
+      return h("tr",{},h("td",{},h("b",{},ab.id)),h("td",{},ab.anchors.join(", ")),
+        h("td",{class:"num mono"},ft.bluff.toFixed(1)),
+        h("td",{class:"num"},pct(ho.metrics.bluff_rate)),
+        h("td",{class:"num"},fmt(ho.metrics.capture,2)),
+        h("td",{class:"num"},fmt(ho.metrics.avg_payoff,1)),
+        h("td",{class:"num mono"},ho.elo.learner.toFixed(0)),
+        h("td",{class:"num"},Object.entries(ho.per_anchor).map(([a,s])=>`${a} ${pct(s)}`).join(" · ")));
+    });
+    const ftMain=fin?fin.theta:{bluff:gN.theta.bluff};
+    el.append(h("div",{class:"card"},h("h3",{},"Population ablation: is bluffing *selected*, or just drift?"),
+      h("div",{class:"note"},"Identical mutation stream (same rng seed), identical trainer — only the opponent population differs. Scripted anchors other than Gullible are word-deaf (they infer from actions only), so without a word-reader in the population the bluff knob is fitness-neutral and can only drift. With Gullible present, false claims move opponents' estimates → real selection pressure on bluff θ."),
+      svgLine(series,{xlab:"generation",ymin:0,ymax:36,H:220,yfmt:y=>y.toFixed(0)}),legendRow(series),
+      h("table",{style:"margin-top:12px"},h("thead",{},h("tr",{},h("th",{},"condition"),h("th",{},"anchors"),
+        h("th",{class:"num"},"final bluff θ"),h("th",{class:"num"},"holdout bluff rate"),h("th",{class:"num"},"capture"),
+        h("th",{class:"num"},"payoff"),h("th",{class:"num"},"holdout Elo"),h("th",{class:"num"},"score vs anchors"))),
+        h("tbody",{},
+          h("tr",{},h("td",{},h("b",{},"main")),h("td",{},sp.meta.anchors.join(", ")),
+            h("td",{class:"num mono"},ftMain.bluff.toFixed(1)),
+            h("td",{class:"num"},fin?pct(fin.holdout.metrics.bluff_rate):"—"),
+            h("td",{class:"num"},fin?fmt(fin.holdout.metrics.capture,2):"—"),
+            h("td",{class:"num"},fin?fmt(fin.holdout.metrics.avg_payoff,1):"—"),
+            h("td",{class:"num mono"},fin?fin.holdout.elo.learner.toFixed(0):"—"),
+            h("td",{class:"num"},fin?Object.entries(fin.holdout.per_anchor).map(([a,s])=>`${a} ${pct(s)}`).join(" · "):"—")),
+          ...rows))));
+  }
+  // auto findings
+  const dElo=gN.eval.elo.learner-g0.eval.elo.learner;
+  const dB=gN.theta.bluff-g0.theta.bluff;
+  const bestElo=Math.max(...gens.map(g=>g.eval.elo.learner));
+  const bestGen=gens.find(g=>g.eval.elo.learner===bestElo).gen;
+  const beatsHardball=gN.eval.elo.learner>gN.eval.elo.hardball;
+  const items=[
+    h("li",{},`Eval Elo moved ${dElo>=0?"+":""}${dElo.toFixed(0)} over ${gens.length} generations (peak ${bestElo.toFixed(0)} at gen ${bestGen}); `+
+      `final champion ${beatsHardball?"outranks":"still trails"} Hardball (${gN.eval.elo.learner.toFixed(0)} vs ${gN.eval.elo.hardball.toFixed(0)}) on the fixed yardstick.`),
+    h("li",{},`The bluff knob drifted ${dB>=0?"up":"down"} from ${g0.theta.bluff.toFixed(1)} to ${gN.theta.bluff.toFixed(1)} points; `+
+      `measured bluff rate went ${pct(g0.eval.metrics.bluff_rate)} → ${pct(gN.eval.metrics.bluff_rate)} `+
+      `(opponents concede ${fmt(gN.eval.metrics.conc_after_bluff,1)} price units after its false claims).`),
+    h("li",{},`Discipline held throughout: no-ZOPA walk rate ${pct(gN.eval.metrics.nozopa_walk_rate)}, sucker rate ${pct(gN.eval.metrics.sucker_rate)}, illegal-move rate ${pct(gN.eval.metrics.illegal_rate)} — reward pressure did not discover engine abuse or negative-surplus deals.`),
+    h("li",{},`Capture ${fmt(g0.eval.metrics.capture,2)} → ${fmt(gN.eval.metrics.capture,2)}; efficiency ${pct(g0.eval.metrics.zopa_deal_rate)} → ${pct(gN.eval.metrics.zopa_deal_rate)}; patience knob accept_mult ${g0.theta.accept_mult.toFixed(2)} → ${gN.theta.accept_mult.toFixed(2)}.`),
+  ];
+  if(fin){
+    const ho=fin.holdout;
+    const beats=Object.entries(ho.per_anchor).filter(([a,s])=>s>0.5).map(([a,s])=>`${a} (${pct(s)})`);
+    items.push(h("li",{},`On the untouched holdout the champion scores ${ho.elo.learner.toFixed(0)} Elo and wins the majority of hands vs ${beats.join(", ")||"no anchor"} — generalization, not yardstick overfitting.`));
+  }
+  if(sp.ablations&&sp.ablations.length){
+    const res=sp.ablations.find(a=>a.id==="resistant");
+    if(res) items.push(h("li",{},`Population ablation: with word-readers (Gullible) in the population the bluff knob ends at ${fin?fin.theta.bluff.toFixed(1):"—"}; against word-deaf adversaries it lands at ${res.final.theta.bluff.toFixed(1)} (bluff rate ${pct(res.final.holdout.metrics.bluff_rate)}) — deception pays only where someone listens.`));
+  }
+  el.append(h("div",{class:"card"},h("h3",{},"Auto-findings"),
+    h("ul",{style:"margin-left:20px;color:#c3cfe0"},items)));
+}
+
+/* ---------------- about ---------------- */
+function renderAbout(el){
+  const arch=`┌────────────────────────────────────────────────────────────────────────┐
+│                              ANALYSIS LAYER                            │
+│   Elo/Bradley-Terry + bootstrap CIs · win-rate matrices · strategy     │
+│   metrics (capture, discipline, bluffing) · replay/SFT export          │
+└──────────────▲────────────────────────────────────────▲────────────────┘
+               │ GameResult stream (events, decisions,  │
+               │ beliefs, payoffs, engine truth)        │
+┌──────────────┴──────────────────┐   ┌─────────────────┴────────────────┐
+│        TOURNAMENT ORCHESTRATOR  │   │        DEMO / REPORT BUILDER     │
+│  round-robin × duplicate seeds  │   │  demo.html · results.json ·      │
+│  × seat swap → play_game()      │   │  report.md · leaderboard         │
+└──────────────▲──────────────────┘   └──────────────────────────────────┘
+               │ validates EVERY move; illegal → safe fallback + counter
+┌──────────────┴─────────────────────────────────────────────────────────┐
+│                            GAME ENGINES                                │
+│  Deadline Bargaining: alt. offers, private v/c, δ=0.9, 6 rounds,        │
+│                       walk-away, cheap talk (untrusted)                │
+│  Colonel Blotto:     sealed simultaneous allocation, 5 fields          │
+└──────────────▲─────────────────────────────────────────────────────────┘
+               │ public_view() + private_view(seat)   [info-hiding wall]
+┌──────────────┴─────────────────────────────────────────────────────────┐
+│                     AGENTS (one protocol: act → Decision)              │
+│  scripted: Random · Eager · Honest-Mid · Gullible (reads cheap talk)   │
+│            · Reciprocal · Hardball(bluffs) · Bayes-Soft/Sharp          │
+│              (posterior over opponent type) · Level-K1/K2 (Blotto)     │
+│  learned:  5-knob policy evolved by RWR self-play (arena/training)     │
+│  LLM:      OpenAI-compatible client · prompt variants                  │
+│            basic / strategic / belief · JSON-schema output,            │
+│            retry→fallback · injection-proofing · usage metering        │
+└────────────────────────────────────────────────────────────────────────┘`;
+  el.append(h("div",{class:"card about"},
+    h("h2",{},"What this is"),
+    h("p",{},"AgentArena measures ", h("i",{},"strategic quality"), " of LLM-ready negotiation agents in games with conflicting incentives and incomplete information — not task completion. Two engines ship today: "),
+    h("ul",{},
+      h("li",{},h("b",{},"Deadline Bargaining:")," alternating price offers between a buyer (private value v) and a seller (private cost c). The pie shrinks 10% per round; after 6 proposals the last responder can only accept or walk. ~⅓ of hands have no ZOPA, where the rational outcome is 0-0 — closing a deal there is a measurable strategic error. Cheap-talk messages may lie; the engine never trusts them — but the Gullible baseline believes them, which makes deception an evolvable trait."),
+      h("li",{},h("b",{},"Colonel Blotto:")," sealed simultaneous troop allocation across 5 unequal fields — constant-sum, no pure-strategy equilibrium, rewards level-k reasoning about the opponent.")),
+    h("h3",{},"Self-play (RWR)"),
+    h("p",{},"A 5-knob learned policy (anchor, patience, bluff offset, walk discipline, opponent-model hawkishness) is evolved by reward-weighted population selection against a fixed anchor ladder — with fresh training hands each generation, a champion ratchet on a fixed evaluation yardstick, an untouched holdout scored once, and population ablations sharing one mutation stream. See the Self-play tab for the Elo-drift curve and the “does bluffing evolve?” contrast."),
+    h("h3",{},"Evaluation methodology"),
+    h("ul",{},
+      h("li",{},h("b",{},"Duplicate deals:")," every agent pair plays the identical seeded scenario list with seats swapped, so Elo differences reflect strategy, not luck of the draw."),
+      h("li",{},h("b",{},"Relative-outcome Elo:")," each game is a head-to-head W/D/L by payoff comparison; ratings are a Bradley-Terry MLE (Zermelo iteration) anchored at mean 1500 with 95% bootstrap CIs (250 resamples)."),
+      h("li",{},h("b",{},"Beyond Elo:")," efficiency (deals when ZOPA exists), discipline (walks when it doesn’t), surplus capture, sucker rate (negative-payoff deals), bluff rate (claims vs. true reservation), bluff effectiveness, concession curves, illegal-move rate."),
+      h("li",{},h("b",{},"Engine guardrails:")," every move passes validate(); illegal moves are replaced with a safe fallback and counted per agent; message length capped; opponent text marked untrusted in prompts; ground truth never crosses the info-hiding wall.")),
+    h("h3",{},"LLM agents"),
+    h("p",{},"arena/agents/llm_agent.py plugs any OpenAI-compatible model (OpenAI, OpenRouter, vLLM, Ollama…) into the identical pipeline, with three prompt variants (basic / strategic / belief-carryover) as the prompting ablation axis and per-model leaderboards as the model-family axis. ",
+      h("b",{}, "This demo build ran fully offline: all agents shown are the scripted strategy ladder — the harness, metrics and viewer are exactly what an LLM run produces.")),
+    h("h3",{},"Self-play / fine-tuning hook"),
+    h("p",{},"Every decision can be exported as a reward-weighted training record (RWR/RAFT-style): w = exp((payoff − baseline)/β), top-quantile filtering, JSONL out — see arena/training/sft_export.py."),
+    h("h3",{},"Architecture"),
+    h("pre",{},arch)));
+}
+
+/* ---------------- boot ---------------- */
+renderChips(); renderNav(); renderTab();
+</script>
+</body>
+</html>
