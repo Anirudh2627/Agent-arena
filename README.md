@@ -207,4 +207,4 @@ agentarena/
   anchor populations and a larger policy space.
 * Next game: 3-player coalition bargaining (majority vote → betrayal
   dynamics); then closing the full loop with LLM policies fine-tuned on the
-  SFT export, re-entering the tournament per generation.
+  SFT export, re-entering the tournament per generation
